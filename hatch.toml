@@ -1,0 +1,47 @@
+[metadata]
+allow-direct-references = true
+
+[version]
+path = "src/mountainash_rules_babel/__version__.py"
+
+[build.targets.wheel]
+packages = ["src/mountainash_rules_babel"]
+
+[envs.default]
+installer = "uv"
+path = ".venv"
+dependencies = []
+
+[envs.test]
+installer = "uv"
+dependencies = [
+    "pytest==8.3.5",
+    "pytest-check==2.5.3",
+    "pytest-cov>=4.1.0",
+    "pytest-clarity>=1.0.1",
+
+    "mountainash_data @         {root:uri}/../mountainash-data",
+    "mountainash @              {root:uri}/../mountainash",
+    "mountainash_settings @     {root:uri}/../mountainash-settings",
+    "mountainash_utils_rules @  {root:uri}/../mountainash-utils-rules",
+]
+
+[[envs.test.matrix]]
+python = ["3.12"]
+
+[envs.test.scripts]
+test = "pytest -v"
+test-quick = "pytest"
+test-target = "pytest {args} -v"
+test-cov = [
+    "pytest --cov --junitxml=junit.xml",
+    "coverage report --show-missing",
+]
+
+[envs.ruff]
+installer = "uv"
+dependencies = ["ruff==0.3.7"]
+
+[envs.ruff.scripts]
+check = "ruff check ./src"
+fix = "ruff check ./src --fix"

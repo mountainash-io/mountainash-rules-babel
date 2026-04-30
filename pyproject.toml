@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mountainash_rules_babel"
+dynamic = ["version"]
+description = "Mountain Ash Rules Babel — translate decision logic between formats"
+readme = "README.md"
+requires-python = ">=3.12"
+keywords = ["rules", "decision-tables", "dmn", "translation"]
+authors = [
+    { name = "Nathaniel Ramm", email = "nathaniel.ramm@discretedatascience.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+    "polars>=1.35.1",
+    "lxml>=5.0.0",
+    "defusedxml>=0.7.0",
+    "typer>=0.12.0",
+]
+
+[project.optional-dependencies]
+jdm = ["zen-engine"]
+flagd = ["python-jsonlogic"]
+decompose = ["hyfd"]
+drools = ["openpyxl"]
+dmn-feel = ["pySFeel"]
+all = ["zen-engine", "python-jsonlogic", "hyfd", "openpyxl", "pySFeel"]
+
+[project.scripts]
+babel = "mountainash_rules_babel.cli.main:app"
+
+[project.entry-points."mountainash_babel.exporters"]
+csv = "mountainash_rules_babel.exporters.csv_:CsvExporter"
+dmn = "mountainash_rules_babel.exporters.dmn:DmnExporter"
+
+[project.entry-points."mountainash_babel.importers"]
+csv = "mountainash_rules_babel.importers.csv_:CsvImporter"
+
+[project.entry-points."mountainash_babel.validators"]
+round_trip = "mountainash_rules_babel.validators.round_trip:RoundTripValidator"
+conflicts = "mountainash_rules_babel.validators.conflicts:ConflictsValidator"
+coverage = "mountainash_rules_babel.validators.coverage:CoverageValidator"
+orphans = "mountainash_rules_babel.validators.orphans:OrphansValidator"
+
+[project.urls]
+Source = "https://github.com/mountainash-io/mountainash-rules-babel"
+
+[tool.coverage.run]
+source_pkgs = ["mountainash_rules_babel"]
+branch = true
+parallel = true
+omit = ["src/mountainash_rules_babel/__version__.py"]
+
+[tool.coverage.paths]
+mountainash_rules_babel = [
+    "src/mountainash_rules_babel",
+    "*/mountainash-rules-babel/src/mountainash_rules_babel",
+]
+tests = ["tests", "*/mountainash-rules-babel/tests"]
+
+[tool.coverage.report]
+exclude_lines = ["no cov", "if __name__ == .__main__:", "if TYPE_CHECKING:"]
