@@ -1,0 +1,4 @@
+rule_name,country,product,price
+rule_1,AU,widget,100
+rule_2,NZ,widget,90
+rule_3,AU,gadget,150
