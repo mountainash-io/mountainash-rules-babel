@@ -133,7 +133,6 @@ class DmnExporter:
 
         df = _to_polars(lattice)
         dim_names = {d.dimension_name for d in lattice.metadata.dimensions}
-        dim_map: dict[str, Dimension] = {d.dimension_name: d for d in lattice.metadata.dimensions}
 
         # Range dimensions consume two columns; collect the extra (range_max_field) to skip
         range_extra_cols: set[str] = set()
