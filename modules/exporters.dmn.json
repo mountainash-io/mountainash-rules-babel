@@ -1,0 +1,60 @@
+{
+  "id": "mountainash_rules_babel.exporters.dmn",
+  "path": "src/mountainash_rules_babel/exporters/dmn.py",
+  "summary": "DMN XML exporter backend. Generates OMG DMN 1.3 XML with FEEL condition expressions from Lattice dimension match strategies. Handles 11 MatchStrategy types including EXACT, RANGE, SET_MEMBERSHIP, PREFIX, SUFFIX, CONTAINS, REGEX, and comparison operators.",
+  "role": "backend",
+  "visibility": "internal",
+  "stability": "evolving",
+  "audiences": ["maintainers", "backend-architecture"],
+  "doc_priority": "useful",
+  "confidence": "high",
+  "public_api": [
+    "DmnExporter.name = 'dmn'",
+    "DmnExporter.file_extension = '.dmn'",
+    "DmnExporter.export(lattice, path, **options) -> Path",
+    "DmnExporter.export_bytes(lattice, **options) -> bytes"
+  ],
+  "key_classes": ["DmnExporter"],
+  "key_functions": ["_feel_entry", "_feel_range_entry", "_type_ref", "_to_polars"],
+  "dependencies": [
+    "polars",
+    "lxml",
+    "mountainash_rules.constants.MatchStrategy",
+    "mountainash_rules.dimension.Dimension",
+    "mountainash_rules.lattice"
+  ],
+  "dependents": [],
+  "extension_points": [],
+  "lifecycle_notes": [
+    "Registered via entry point: mountainash_babel.exporters: dmn",
+    "FEEL generation covers 11 match strategies; REGEX falls back to plain string",
+    "Export options: decision_name, table_name"
+  ],
+  "documentation_hooks": [
+    "DMN export options (decision_name, table_name)",
+    "FEEL expression mapping table",
+    "Match strategy → FEEL conversion reference"
+  ],
+  "examples": [
+    "docs/quickstart.md — DMN export with options"
+  ],
+  "tests": [
+    "tests/test_dmn_exporter.py"
+  ],
+  "risks": [
+    "REGEX match strategy emits plain string — not valid FEEL"
+  ],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "config", "path": "pyproject.toml", "detail": "dmn = mountainash_rules_babel.exporters.dmn:DmnExporter"},
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/exporters/dmn.py", "detail": "_feel_entry handles 11 MatchStrategy variants"},
+    {"kind": "test", "path": "tests/test_dmn_exporter.py", "detail": "Tests DMN export with various match strategies"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

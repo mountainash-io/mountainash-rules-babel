@@ -1,0 +1,78 @@
+{
+  "id": "mountainash_rules_babel.registry",
+  "path": "src/mountainash_rules_babel/registry.py",
+  "summary": "Plugin registry using importlib.metadata entry points. Discovers and stores exporters, importers, decomposers, and validators. Provides lookup by name and extension-based importer resolution.",
+  "role": "orchestration",
+  "visibility": "semi-public",
+  "stability": "stable",
+  "audiences": ["users", "maintainers", "extension-authors", "backend-architecture"],
+  "doc_priority": "essential",
+  "confidence": "high",
+  "public_api": [
+    "PluginRegistry(auto_discover=True)",
+    "PluginRegistry.discover()",
+    "PluginRegistry.register_exporter(exporter)",
+    "PluginRegistry.register_importer(importer)",
+    "PluginRegistry.register_decomposer(decomposer)",
+    "PluginRegistry.register_validator(validator)",
+    "PluginRegistry.get_exporter(name) -> Exporter",
+    "PluginRegistry.get_importer(name) -> Importer",
+    "PluginRegistry.get_decomposer(name) -> Decomposer",
+    "PluginRegistry.get_validator(name) -> Validator",
+    "PluginRegistry.get_importer_for_extension(ext) -> Importer",
+    "PluginRegistry.list_exporters() -> list[str]",
+    "PluginRegistry.list_importers() -> list[str]",
+    "PluginRegistry.list_decomposers() -> list[str]",
+    "PluginRegistry.list_validators() -> list[str]",
+    "registry — module-level singleton instance"
+  ],
+  "key_classes": ["PluginRegistry"],
+  "key_functions": [],
+  "dependencies": [
+    "mountainash_rules_babel.errors",
+    "mountainash_rules_babel.exporters.base",
+    "mountainash_rules_babel.importers.base",
+    "mountainash_rules_babel.decomposers.base",
+    "mountainash_rules_babel.validators.base"
+  ],
+  "dependents": [
+    "mountainash_rules_babel.__init__",
+    "mountainash_rules_babel.cli.main"
+  ],
+  "extension_points": [
+    "Entry point groups: mountainash_babel.exporters, mountainash_babel.importers, mountainash_babel.decomposers, mountainash_babel.validators",
+    "Manual registration via register_exporter/importer/decomposer/validator methods"
+  ],
+  "lifecycle_notes": [
+    "Module-level singleton auto-discovers on import",
+    "Load failures logged at DEBUG — silent in production"
+  ],
+  "documentation_hooks": [
+    "Plugin development guide",
+    "Available formats listing",
+    "Extension authoring docs"
+  ],
+  "examples": [
+    "docs/quickstart.md — registry.list_exporters(), list_importers(), list_validators()"
+  ],
+  "tests": [
+    "tests/test_registry.py"
+  ],
+  "risks": [
+    "Plugin load failures logged at DEBUG only — users won't know a plugin failed to load"
+  ],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/registry.py", "detail": "PluginRegistry class with 4 entry point groups"},
+    {"kind": "config", "path": "pyproject.toml", "detail": "Entry points defined under [project.entry-points]"},
+    {"kind": "test", "path": "tests/test_registry.py", "detail": "Tests registry discovery and lookup"},
+    {"kind": "doc", "path": "docs/quickstart.md", "detail": "Shows list_exporters/importers/validators usage"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}
