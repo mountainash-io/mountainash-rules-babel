@@ -31,6 +31,9 @@ This chapter covers the Importer protocol contract and its concrete implementati
 
 ---
 
+<!-- concept:18 -->
+<!-- concept:19 -->
+<!-- concept:21 -->
 ## The Importer's Role
 
 An importer is the entry point of the babel pipeline. It reads an external file format, infers or applies metadata, and produces a Lattice object that the rest of the system can work with. The importer must bridge the gap between a format that carries no semantic metadata (like CSV) and the rich Lattice structure that babel's exporters and validators expect.
@@ -52,6 +55,7 @@ Any class that provides these three members with compatible types satisfies the 
 
 The `**options` keyword argument on `import_lattice` allows each importer to accept format-specific parameters without changing the protocol definition. The CsvImporter, for example, accepts `dimension_columns` and `aggregate_columns` options that have no meaning for other formats.
 
+<!-- concept:20 -->
 ## Import Name Attribute
 
 The **name attribute** is a string that identifies the importer within the registry. It must be unique across all registered importers. For the built-in CSV importer, the name is `"csv"`.
@@ -125,6 +129,7 @@ Type: workflow
 **Learning Objective:** Trace the complete import pipeline from file to Lattice (Bloom: Apply).
 </details>
 
+<!-- concept:22 -->
 ## CsvImporter Class
 
 The **CsvImporter** is babel's built-in implementation of the Importer protocol. It reads CSV files using Polars, infers dimension columns when not explicitly specified, detects data types from the Polars schema, and constructs a Lattice with the appropriate metadata.
@@ -153,6 +158,7 @@ The method accepts two optional parameters beyond the required `path`:
 
 This design provides flexibility: users who know their data can specify columns explicitly for precision, while users exploring a new dataset can rely on automatic inference.
 
+<!-- concept:25 -->
 ## Polars CSV Read
 
 The CsvImporter uses the **Polars** library to read CSV files. Polars is a high-performance DataFrame library written in Rust with Python bindings. Babel chose Polars over pandas for several reasons:
@@ -169,6 +175,7 @@ df = pl.read_csv(path)
 
 This produces a `pl.DataFrame` where each column has an inferred Polars data type (e.g., `pl.Int64`, `pl.Utf8`, `pl.Float64`). The CsvImporter then uses this type information in the data type detection step.
 
+<!-- concept:23 -->
 ## Dimension Column Inference
 
 When the user does not specify `dimension_columns`, the CsvImporter must **infer** which columns are input dimensions and which are output aggregates. The inference algorithm uses an exclusion-based approach:
@@ -193,6 +200,7 @@ This approach is a reasonable default for simple decision tables where most colu
 
 The inference algorithm makes a deliberate trade-off: it is simple and predictable at the cost of requiring explicit configuration for complex tables. The alternative --- using heuristics like "the last column is always the output" --- would be fragile and format-dependent.
 
+<!-- concept:24 -->
 ## Data Type Detection
 
 After identifying dimension columns, the CsvImporter **detects the data type** of each dimension by examining the Polars column schema. The detection maps Polars types to Python types:

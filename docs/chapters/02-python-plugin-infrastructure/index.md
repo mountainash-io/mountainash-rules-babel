@@ -31,6 +31,8 @@ This chapter covers the Python language features that enable the babel plugin sy
 
 Babel must support multiple input formats, multiple output formats, multiple validators, and multiple decomposition strategies. Hard-coding these into a monolithic module would make the system rigid and difficult to extend. A plugin architecture allows new capabilities to be added --- by the core team or by third parties --- without modifying existing code. Python provides two key mechanisms that make this possible: **protocols** for defining contracts, and **entry points** for discovering implementations at runtime.
 
+<!-- concept:7 -->
+<!-- concept:8 -->
 ## Python Protocols
 
 A **protocol** in Python is a structural typing mechanism introduced in PEP 544 (Python 3.8+). Unlike abstract base classes, protocols define a contract based on what methods and attributes an object has, rather than what class hierarchy it inherits from. Any class that implements the required methods and attributes satisfies the protocol, without needing to explicitly inherit from it.
@@ -108,6 +110,8 @@ There is an important limitation: `@runtime_checkable` only checks that methods 
 | Runtime (`isinstance`) | Methods and attributes exist | During plugin discovery |
 | Neither | Semantic correctness (e.g., returns valid Lattice) | Must be tested |
 
+<!-- concept:9 -->
+<!-- concept:13 -->
 ## Entry Points Mechanism
 
 Python's **entry points mechanism** (defined in `importlib.metadata`) allows installed packages to advertise components that other packages can discover without knowing the package name in advance. Entry points are declared in a package's `pyproject.toml` and become available to any Python process that queries for them.
@@ -130,6 +134,7 @@ Each line maps a short name (e.g., `csv`) to a fully-qualified Python path point
 
 The entry points mechanism is what makes babel truly extensible. A third-party package can declare its own entry points in the same group, and babel will discover them automatically --- no configuration changes needed in the core babel package.
 
+<!-- concept:12 -->
 #### Diagram: Entry Point Discovery Flow
 
 <iframe src="../../sims/entry-point-discovery/main.html" width="100%" height="500px" scrolling="no"></iframe>
@@ -151,6 +156,7 @@ Type: workflow
 **Learning Objective:** Trace the complete path from entry point declaration to runtime plugin instantiation (Bloom: Apply).
 </details>
 
+<!-- concept:11 -->
 ## PluginRegistry Class
 
 The **PluginRegistry** class is the central coordinator that discovers, stores, and provides access to all babel plugins. It maintains four internal dictionaries --- one for each plugin category (exporters, importers, decomposers, validators) --- and provides typed accessor methods for retrieving plugins by name.

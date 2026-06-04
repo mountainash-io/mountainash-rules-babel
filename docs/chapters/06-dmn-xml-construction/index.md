@@ -36,6 +36,7 @@ The DmnExporter's `export_bytes` method constructs a DMN 1.3 XML document progra
 
 The construction follows the DMN element hierarchy top-down: Definitions contains Decision, Decision contains DecisionTable, and DecisionTable contains Input, Output, and Rule elements. Understanding each layer is essential for debugging export output or extending the exporter.
 
+<!-- concept:34 -->
 ## DMN XML Tree Construction
 
 The **DMN XML tree construction** process begins with a conversion step and a classification step before any XML elements are created. The DmnExporter first converts the Lattice's data to a Polars DataFrame, then classifies columns into dimensions (inputs) and outputs:
@@ -53,6 +54,7 @@ for dim in lattice.metadata.dimensions:
         if dim.range_max_field:
             range_extra_cols.add(dim.range_max_field)
 
+<!-- concept:39 -->
 # Output columns = everything that isn't a dimension, range helper, or rule_name
 output_cols = [
     c for c in df.columns
@@ -90,6 +92,9 @@ Type: workflow
 **Learning Objective:** Apply the column classification logic to predict how a given DataFrame's columns will be categorized (Bloom: Apply).
 </details>
 
+<!-- concept:35 -->
+<!-- concept:36 -->
+<!-- concept:37 -->
 ## DMN Definitions Element
 
 The **Definitions element** is the root of every DMN XML document. It carries the DMN namespace declaration, a unique identifier, a human-readable name, and a namespace URI for the model itself:
@@ -152,6 +157,8 @@ The DMN specification defines several hit policies that control how overlapping 
 
 Babel uses UNIQUE because it matches the semantics of well-formed decision tables where each input combination maps to exactly one output. The ConflictsValidator (Chapter 8) checks for violations of this assumption before export.
 
+<!-- concept:38 -->
+<!-- concept:40 -->
 ## DMN Input Elements
 
 **Input elements** define the input columns of the decision table. Babel creates one Input element per dimension in the Lattice's metadata. Each Input contains an InputExpression that specifies the column name and data type:
@@ -280,6 +287,7 @@ The serialization options ensure that the output is:
 
 The result is a complete, standards-compliant DMN 1.3 XML document that can be loaded into any DMN-compatible decision engine.
 
+<!-- concept:53 -->
 ## XML Security Module
 
 The **XML Security Module** (`mountainash_rules_babel/xml_security.py`) provides safe XML parsing for any future import-side operations that need to read XML files. While the DmnExporter only writes XML (using lxml's builder API, which is inherently safe), any XML reader in the system must guard against XML-based attacks.

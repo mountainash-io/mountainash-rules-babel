@@ -32,6 +32,7 @@ This chapter covers the Typer-based command-line interface that provides user-fa
 
 While babel provides a Python API for programmatic use, many users interact with decision tables through shell scripts, CI/CD pipelines, and manual workflows. A command-line interface provides these users with direct access to babel's import, export, and validation capabilities without writing Python code. The CLI is also the simplest way to explore babel's features and test translations during development.
 
+<!-- concept:64 -->
 ## Typer CLI App
 
 **Typer** is a Python library for building command-line interfaces with type hints. Babel uses Typer because it generates help text, argument validation, and tab completion from standard Python type annotations, reducing boilerplate compared to argparse or click.
@@ -75,6 +76,9 @@ def formats() -> None:
 
 This command queries the PluginRegistry singleton to discover what formats are currently available, providing users with a quick way to check their installation.
 
+<!-- concept:65 -->
+<!-- concept:66 -->
+<!-- concept:67 -->
 #### Diagram: CLI Command Architecture
 
 <iframe src="../../sims/cli-command-architecture/main.html" width="100%" height="450px" scrolling="no"></iframe>

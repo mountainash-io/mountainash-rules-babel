@@ -38,6 +38,8 @@ This chapter covers the validation and decomposition subsystems. You will learn 
 
 Format translation is not just about producing syntactically correct output. A decision table might be well-formed XML yet contain logical errors --- overlapping rules that produce contradictory outputs, gaps in coverage where no rule applies, or rules that can never fire because they are shadowed by others. Babel's validation subsystem provides structured checks for these issues, while the decomposition subsystem addresses complexity by splitting large tables into manageable, focused fragments.
 
+<!-- concept:54 -->
+<!-- concept:61 -->
 ## Validator Protocol
 
 The **Validator protocol** defines the contract for all validation plugins. Like the Importer and Exporter protocols, it uses `@runtime_checkable` to enable runtime type checking:
@@ -54,6 +56,11 @@ The protocol is the simplest in babel: just a name attribute and a single method
 
 This design means validators are purely diagnostic --- they inspect the Lattice but never modify it. They report problems; they do not fix them. This separation of concerns keeps the validation logic focused and testable.
 
+<!-- concept:55 -->
+<!-- concept:56 -->
+<!-- concept:62 -->
+<!-- concept:63 -->
+<!-- concept:70 -->
 ## ValidationIssue Dataclass
 
 A **ValidationIssue** represents a single problem or observation found during validation. It is a Python dataclass with four fields:
@@ -145,6 +152,7 @@ Type: diagram
 **Learning Objective:** Evaluate how different issue combinations affect the overall validity determination (Bloom: Evaluate).
 </details>
 
+<!-- concept:57 -->
 ## ConflictsValidator
 
 The **ConflictsValidator** checks for overlapping rules that produce different outputs for the same input combination. A conflict means two or more rules could match the same input, and they disagree about what the output should be. This violates the UNIQUE hit policy assumption that babel uses for DMN export.
@@ -166,6 +174,7 @@ Conceptually, a conflict occurs when two rules overlap in their input space:
 
 These rules have identical input conditions but different outputs --- a conflict that would cause ambiguous behavior in a decision engine.
 
+<!-- concept:58 -->
 ## CoverageValidator
 
 The **CoverageValidator** checks whether every valid input combination is handled by at least one rule. A coverage gap means there exist input values for which no rule would fire, potentially causing a decision engine to return no result or throw an error.
@@ -180,6 +189,7 @@ class CoverageValidator:
 
 Complete coverage is especially important for decision tables with enumerable domains. If a dimension has three possible values (Low, Medium, High) and another has two (Yes, No), full coverage requires \( 3 \times 2 = 6 \) rules. If only 5 are present, the CoverageValidator would identify the missing combination.
 
+<!-- concept:59 -->
 ## OrphansValidator
 
 The **OrphansValidator** checks for rules that can never fire because their conditions are completely subsumed by other rules with higher priority or more general matching. An orphan rule is dead code in the decision table --- it increases complexity without contributing to the decision logic.
@@ -194,6 +204,7 @@ class OrphansValidator:
 
 Orphan detection is particularly relevant when tables evolve over time. As new rules are added, older rules may become unreachable. Without automatic detection, these dead rules accumulate and make the table harder to understand and maintain.
 
+<!-- concept:60 -->
 ## RoundTripValidator
 
 The **RoundTripValidator** checks whether exporting a Lattice and re-importing it produces the same data. This validates that the export process is lossless (for formats that can represent the full Lattice) or identifies what information is lost (for lossy formats like CSV that cannot represent metadata).

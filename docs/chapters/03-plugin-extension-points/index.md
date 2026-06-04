@@ -27,6 +27,10 @@ This chapter explains how the four plugin extension axes --- exporters, importer
 
 ---
 
+<!-- concept:14 -->
+<!-- concept:15 -->
+<!-- concept:16 -->
+<!-- concept:17 -->
 ## Extension Points as a Design Pattern
 
 An **extension point** is a well-defined location in a system where new functionality can be plugged in. In babel, there are exactly four extension points, each corresponding to one stage of the decision table lifecycle: importing data into the system, exporting it to a target format, validating it for correctness, and decomposing it into normalized fragments. Each extension point is backed by a protocol (the contract), an entry point group (the registration mechanism), and a dictionary in the PluginRegistry (the runtime storage).
@@ -135,6 +139,7 @@ Each validator examines a different aspect of the decision table:
 
 Validators are designed to be composable. The `validate()` public API function accepts an optional `checks` parameter to select specific validators, or runs all registered validators when no selection is provided. This allows users to run a quick single-check or a comprehensive audit depending on their needs.
 
+<!-- concept:68 -->
 ## The BabelError Exception Hierarchy
 
 All exceptions raised by babel operations derive from a single base class, **BabelError**. This provides a clean hierarchy that calling code can catch at the appropriate level of granularity --- catch `BabelError` for any babel-related failure, or catch a specific subclass for targeted error handling.
@@ -189,6 +194,7 @@ Type: diagram
 **Learning Objective:** Evaluate which exception to catch for different error handling scenarios (Bloom: Evaluate).
 </details>
 
+<!-- concept:69 -->
 ## FormatNotFoundError
 
 The **FormatNotFoundError** is the most commonly encountered error in babel. It is raised whenever a user requests a plugin by name or file extension that does not exist in the registry. The error class carries two pieces of diagnostic information:

@@ -31,6 +31,10 @@ This chapter introduces the Exporter protocol and its two concrete implementatio
 
 ---
 
+<!-- concept:26 -->
+<!-- concept:27 -->
+<!-- concept:29 -->
+<!-- concept:30 -->
 ## The Exporter's Role
 
 Exporters occupy the output side of the babel pipeline. They consume a Lattice object and produce a file or byte stream in a specific format. While importers must deal with ambiguity (inferring metadata from schema-less formats), exporters have the opposite challenge: they must faithfully serialize all the semantic information in the Lattice into a format that target systems can consume.
@@ -53,6 +57,7 @@ Compared to the Importer protocol (two attributes, one method), the Exporter pro
 
 Note the subtle difference in attribute naming: importers use `file_extensions` (plural, a list) because an importer might handle multiple extensions, while exporters use `file_extension` (singular, a string) because each exporter produces exactly one output format.
 
+<!-- concept:28 -->
 ## Export Name Attribute
 
 The **export name attribute** identifies the exporter within the registry. Users reference this name in the CLI (`--format dmn`) and the Python API (`export_lattice(lattice, "dmn")`). The name must be unique across all registered exporters.
@@ -137,6 +142,8 @@ Type: diagram
 **Learning Objective:** Evaluate when to use export() vs. export_bytes() based on the consumption context (Bloom: Evaluate).
 </details>
 
+<!-- concept:31 -->
+<!-- concept:33 -->
 ## CsvExporter Class
 
 The **CsvExporter** converts a Lattice back into CSV format. It is the simplest exporter because CSV is a flat, text-based format that closely mirrors the Lattice's internal DataFrame structure.
@@ -162,6 +169,7 @@ Both methods delegate to a private `_to_polars` helper that handles the Lattice-
 
 The CsvExporter does not include dimension metadata, match strategies, or aggregation information in the output --- CSV has no way to represent these. This means a round-trip (CSV import followed by CSV export) preserves the data but loses metadata, which is why the RoundTripValidator exists as a separate validation check.
 
+<!-- concept:32 -->
 ## Polars DataFrame Conversion
 
 The **Polars DataFrame conversion** step extracts a `pl.DataFrame` from the Lattice's `combinations` property. The Lattice stores its data in a backend-agnostic way, so the conversion must handle multiple possible storage formats:

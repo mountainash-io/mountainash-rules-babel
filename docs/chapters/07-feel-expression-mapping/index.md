@@ -34,12 +34,14 @@ This chapter covers the translation of MatchStrategy values to DMN FEEL expressi
 
 ---
 
+<!-- concept:41 -->
 ## The Mapping Problem
 
 Every cell in a DMN decision table's input columns must contain a FEEL expression that defines what values that cell matches. The mountainash-rules ecosystem uses a `MatchStrategy` enum internally to represent different matching behaviors (exact equality, range checking, prefix matching, etc.). The FEEL expression mapping layer translates these internal strategies into the FEEL syntax that decision engines understand.
 
 This translation happens inside the `_feel_entry` function in `mountainash_rules_babel/exporters/dmn.py`. The function examines the dimension's match strategy and the cell value, then returns the appropriate FEEL string. Getting this mapping correct is critical: an incorrect FEEL expression will cause the decision engine to evaluate rules differently than intended.
 
+<!-- concept:44 -->
 ## FEEL Expression Mapping
 
 The **FEEL Expression Mapping** mechanism is implemented as a single dispatcher function that branches on the dimension's `match_strategy` attribute. The function signature is:
@@ -81,6 +83,10 @@ Type: workflow
 **Learning Objective:** Trace how a given cell value and match strategy produce a specific FEEL expression (Bloom: Apply).
 </details>
 
+<!-- concept:42 -->
+<!-- concept:47 -->
+<!-- concept:48 -->
+<!-- concept:49 -->
 ## FEEL Exact Match
 
 The **FEEL exact match** is the most common mapping. It produces a FEEL expression that matches only when the input equals the specified value exactly. The output format depends on the data type:
@@ -107,6 +113,7 @@ Examples of exact match outputs:
 | `3.14` | float | `3.14` |
 | `'He said "hi"'` | str | `"He said \"hi\""` |
 
+<!-- concept:43 -->
 ## FEEL Not Equal
 
 The **FEEL not equal** mapping produces a negation expression. It matches any value except the specified one. The `not()` function in FEEL is used to express exclusion:
@@ -156,6 +163,7 @@ The function handles four cases:
 
 The `[min..max]` syntax in FEEL denotes an inclusive range. For the insurance example, an age range of 18 to 25 would produce `[18..25]`, meaning the rule matches any age value \( x \) where \( 18 \leq x \leq 25 \).
 
+<!-- concept:45 -->
 ## FEEL Greater Than
 
 The **FEEL greater than** mapping produces a comparison expression for values that must exceed a threshold:
@@ -167,6 +175,7 @@ elif strategy == MatchStrategy.GREATER_THAN:
 
 This produces expressions like `> 100`, `> 0`, or `> 3.14`. The FEEL specification defines this as a unary test: when evaluated against an input value \( x \), it returns true if \( x > \text{value} \).
 
+<!-- concept:46 -->
 ## FEEL Less Than
 
 The **FEEL less than** mapping is the complement of greater than:
@@ -243,6 +252,7 @@ Type: microsim
 **Learning Objective:** Apply string-matching strategies to predict which values will match a given pattern (Bloom: Apply).
 </details>
 
+<!-- concept:50 -->
 ## FEEL Set Membership
 
 The **FEEL set membership** mapping checks whether the input value is one of a specified set of values. The FEEL representation is a comma-separated list of quoted strings:
@@ -260,6 +270,7 @@ The value can be either a single item or a list. If it is a single item, it is w
 
 Example: for a value `["Gold", "Platinum"]`, the output is `"Gold", "Platinum"`. In FEEL semantics, this is a disjunction: the rule matches if the input equals "Gold" OR "Platinum".
 
+<!-- concept:51 -->
 ## FEEL Set Exclusion
 
 The **FEEL set exclusion** mapping is the negation of set membership. It matches any value that is NOT in the specified set:
@@ -282,6 +293,7 @@ Set membership and set exclusion together enable partitioning of categorical val
 | SET_MEMBERSHIP | `["Gold", "Platinum"]` | Gold or Platinum only |
 | SET_EXCLUSION | `["Gold", "Platinum"]` | Everything except Gold and Platinum |
 
+<!-- concept:52 -->
 ## NA Sentinel Handling
 
 **NA sentinel handling** addresses the question: how does babel represent "no condition" (a wildcard) in a cell? Different data sources use different conventions for missing or inapplicable values. The `_feel_entry` function recognizes four sentinel patterns and maps all of them to an empty FEEL string (wildcard):
