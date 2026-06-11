@@ -12,20 +12,6 @@ version: 0.08
 
 This chapter introduces the foundational concepts required to understand the mountainash-rules-babel translation engine. You will learn about decision tables and business rules as core abstractions, the CSV and XML data formats used for import/export, the OMG DMN 1.3 standard for interchangeable decision models, the FEEL expression language, and the Lattice object that serves as the internal representation.
 
-## Concepts Covered
-
-- Decision Tables
-- Business Rules
-- CSV Format
-- XML Format
-- DMN Standard
-- FEEL Language
-- Lattice Object
-
-## Prerequisites
-
-None --- this is the introductory chapter.
-
 ---
 
 ## What Problem Does Babel Solve?

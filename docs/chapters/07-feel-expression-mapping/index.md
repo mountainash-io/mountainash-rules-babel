@@ -12,26 +12,6 @@ version: 0.08
 
 This chapter covers the translation of MatchStrategy values to DMN FEEL expressions. You will learn the general FEEL Expression Mapping mechanism and each of the 11 specific mappings: exact match, not equal, range, greater than, less than, prefix, suffix, contains, set membership, set exclusion, and the NA sentinel handling for missing values.
 
-## Concepts Covered
-
-- FEEL Expression Mapping
-- FEEL Exact Match
-- FEEL Not Equal
-- FEEL Range Expression
-- FEEL Greater Than
-- FEEL Less Than
-- FEEL Prefix Match
-- FEEL Suffix Match
-- FEEL Contains Match
-- FEEL Set Membership
-- FEEL Set Exclusion
-- NA Sentinel Handling
-
-## Prerequisites
-
-- Chapter 1: Foundations (FEEL Language, Lattice Object)
-- Chapter 5: Exporter Architecture (DmnExporter Class)
-
 ---
 
 <!-- concept:41 -->

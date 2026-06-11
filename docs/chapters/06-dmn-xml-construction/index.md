@@ -12,22 +12,6 @@ version: 0.08
 
 This chapter details how the DmnExporter builds a complete DMN 1.3 XML document. You will learn the hierarchical element structure --- from the root Definitions element through Decision, DecisionTable, Input, Output, and Rule elements --- and how the XML Security Module ensures safe serialization with entity resolution disabled.
 
-## Concepts Covered
-
-- DMN XML Tree Construction
-- DMN Definitions Element
-- DMN Decision Element
-- DMN DecisionTable Element
-- DMN Input Elements
-- DMN Output Elements
-- DMN Rule Elements
-- XML Security Module
-
-## Prerequisites
-
-- Chapter 1: Foundations (XML Format, DMN Standard, Lattice Object)
-- Chapter 5: Exporter Architecture (DmnExporter Class)
-
 ---
 
 ## Building XML from the Inside Out

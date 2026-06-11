@@ -12,19 +12,6 @@ version: 0.08
 
 This chapter explains how the four plugin extension axes --- exporters, importers, decomposers, and validators --- are registered via entry point groups. It also introduces the BabelError exception hierarchy that provides structured error reporting across all plugin operations.
 
-## Concepts Covered
-
-- Exporter Entry Points
-- Importer Entry Points
-- Decomposer Entry Points
-- Validator Entry Points
-- BabelError Base
-- FormatNotFoundError
-
-## Prerequisites
-
-- Chapter 2: Python Plugin Infrastructure (PluginRegistry Class, Auto Discovery, Entry Point Groups)
-
 ---
 
 <!-- concept:14 -->

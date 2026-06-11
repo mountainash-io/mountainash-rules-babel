@@ -12,23 +12,6 @@ version: 0.08
 
 This chapter covers the Importer protocol contract and its concrete implementation, CsvImporter. You will learn how importers declare their name and supported file extensions, how the import_lattice method constructs a Lattice from file data, and the CSV-specific logic for dimension column inference, data type detection, and Polars-based file reading.
 
-## Concepts Covered
-
-- Importer Protocol
-- Import Name Attribute
-- File Extensions Attribute
-- Import Lattice Method
-- CsvImporter Class
-- Dimension Column Inference
-- Data Type Detection
-- Polars CSV Read
-
-## Prerequisites
-
-- Chapter 1: Foundations (CSV Format, Lattice Object)
-- Chapter 2: Python Plugin Infrastructure (Runtime Checkable Protocol)
-- Chapter 3: Plugin Extension Points (Importer Entry Points)
-
 ---
 
 <!-- concept:18 -->
