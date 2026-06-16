@@ -12,26 +12,6 @@ version: 0.08
 
 This chapter covers the validation and decomposition subsystems. You will learn the Validator protocol contract, the ValidationIssue and ValidationReport dataclasses for structured reporting, and the four built-in validators (conflicts, coverage, orphans, round-trip). It also introduces the Decomposer protocol with its Fragment and DecompositionResult dataclasses for splitting complex tables into normalized fragments.
 
-## Concepts Covered
-
-- Validator Protocol
-- ValidationIssue Dataclass
-- ValidationReport Dataclass
-- ConflictsValidator
-- CoverageValidator
-- OrphansValidator
-- RoundTripValidator
-- Decomposer Protocol
-- Fragment Dataclass
-- DecompositionResult Dataclass
-- ValidationError Class
-
-## Prerequisites
-
-- Chapter 1: Foundations (Lattice Object)
-- Chapter 2: Python Plugin Infrastructure (Runtime Checkable Protocol)
-- Chapter 3: Plugin Extension Points (Validator Entry Points, Decomposer Entry Points, BabelError Base)
-
 ---
 
 ## Quality Assurance in the Translation Pipeline

@@ -12,19 +12,6 @@ version: 0.08
 
 This chapter covers the Python language features that enable the babel plugin system. You will learn about Python protocols and the runtime_checkable decorator, the entry points mechanism from importlib.metadata, and how the PluginRegistry class discovers and loads plugins at runtime through auto-discovery.
 
-## Concepts Covered
-
-- Python Protocols
-- Runtime Checkable Protocol
-- Entry Points Mechanism
-- PluginRegistry Class
-- Auto Discovery
-- Entry Point Groups
-
-## Prerequisites
-
-- Chapter 1: Foundations (Decision Tables, Business Rules, Lattice Object)
-
 ---
 
 ## Why a Plugin Architecture?

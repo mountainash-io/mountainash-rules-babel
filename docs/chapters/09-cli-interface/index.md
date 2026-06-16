@@ -12,20 +12,6 @@ version: 0.08
 
 This chapter covers the Typer-based command-line interface that provides user-facing access to all babel operations. You will learn how the Typer CLI App is structured and how the export, import, and validate commands orchestrate the plugin registry, importers, exporters, and validators to perform end-to-end format translation from the terminal.
 
-## Concepts Covered
-
-- Typer CLI App
-- Babel Export Command
-- Babel Import Command
-- Babel Validate Command
-
-## Prerequisites
-
-- Chapter 2: Python Plugin Infrastructure (PluginRegistry Class)
-- Chapter 4: Importers (CsvImporter Class)
-- Chapter 5: Exporter Architecture (Export Method)
-- Chapter 8: Validators and Decomposers (ValidationReport Dataclass, ConflictsValidator, CoverageValidator, OrphansValidator, RoundTripValidator)
-
 ---
 
 ## Why a CLI?

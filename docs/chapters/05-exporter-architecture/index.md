@@ -12,23 +12,6 @@ version: 0.08
 
 This chapter introduces the Exporter protocol and its two concrete implementations --- CsvExporter and DmnExporter. You will learn the protocol contract (name, file extension, export, export_bytes), how CsvExporter uses Polars DataFrame conversion, and the foundational setup of the DmnExporter including its relationship to the DMN standard.
 
-## Concepts Covered
-
-- Exporter Protocol
-- Export Name Attribute
-- File Extension Attribute
-- Export Method
-- Export Bytes Method
-- CsvExporter Class
-- Polars DataFrame Conversion
-- DmnExporter Class
-
-## Prerequisites
-
-- Chapter 1: Foundations (CSV Format, XML Format, DMN Standard, Lattice Object)
-- Chapter 2: Python Plugin Infrastructure (Runtime Checkable Protocol)
-- Chapter 3: Plugin Extension Points (Exporter Entry Points)
-
 ---
 
 <!-- concept:26 -->
