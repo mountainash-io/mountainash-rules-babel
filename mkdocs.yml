@@ -54,16 +54,6 @@ nav:
   - MicroSims:
       - List of MicroSims: sims/index.md
 
-  - API Reference:
-      - Overview: api/index.md
-      - CLI: api/cli.md
-      - Decomposers: api/decomposers.md
-      - Exporters: api/exporters.md
-      - Importers: api/importers.md
-      - Validators: api/validators.md
-      - Errors: api/errors.md
-      - Registry: api/registry.md
-      - XML Security: api/xml_security.md
 
   - License: license.md
   - Contact: contact.md
@@ -95,17 +85,6 @@ theme:
 # Plugins
 plugins:
   - search
-  - mkdocstrings:
-      handlers:
-        python:
-          paths: ["../../../mountainash-rules-babel/src"]
-          options:
-            show_source: true
-            show_bases: true
-            show_root_heading: true
-            show_root_full_path: false
-            heading_level: 2
-            members_order: source
   # Uncomment after running `pip install "mkdocs-material[imaging]"`:
   # - social
   # Uncomment after running `pip install mkdocs-glightbox`:
