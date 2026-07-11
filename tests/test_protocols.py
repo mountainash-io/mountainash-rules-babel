@@ -1,10 +1,10 @@
 from pathlib import Path
 
 import polars as pl
-from mountainash_utils_rules.aggregate import Aggregate
-from mountainash_utils_rules.constants import MatchStrategy
-from mountainash_utils_rules.dimension import Dimension, DimensionsMetadata
-from mountainash_utils_rules.lattice import Lattice
+from mountainash_rules.aggregate import Aggregate
+from mountainash_rules.constants import MatchStrategy
+from mountainash_rules.dimension import Dimension, DimensionsMetadata
+from mountainash_rules.lattice import Lattice
 
 from mountainash_rules_babel.decomposers.base import Decomposer, DecompositionResult, Fragment
 from mountainash_rules_babel.exporters.base import Exporter

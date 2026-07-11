@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from mountainash_utils_rules.lattice import Lattice
+from mountainash_rules.lattice import Lattice
 
 from mountainash_rules_babel.errors import FormatNotFoundError
 from mountainash_rules_babel.registry import PluginRegistry

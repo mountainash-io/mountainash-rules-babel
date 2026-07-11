@@ -3,12 +3,13 @@ from __future__ import annotations
 import typing as t
 from pathlib import Path
 
-import polars as pl
 from lxml import etree
 
-from mountainash_utils_rules.constants import MatchStrategy
-from mountainash_utils_rules.dimension import Dimension
-from mountainash_utils_rules.lattice import Lattice
+from mountainash_rules.constants import MatchStrategy
+from mountainash_rules.dimension import Dimension
+from mountainash_rules.lattice import Lattice
+
+from mountainash_rules_babel.exporters.base import lattice_to_polars
 
 DMN_NS = "https://www.omg.org/spec/DMN/20191111/MODEL/"
 NSMAP = {None: DMN_NS}
@@ -106,17 +107,6 @@ def _feel_range_entry(row: dict, dim: Dimension) -> str:
     return f"[{min_val}..{max_val}]"
 
 
-def _to_polars(lattice: Lattice) -> pl.DataFrame:
-    combos = lattice.combinations
-    if isinstance(combos, pl.DataFrame):
-        return combos
-    try:
-        from mountainash.relations import relation
-        return relation(combos).to_polars()
-    except Exception:
-        raise TypeError(f"Cannot convert {type(combos)} to polars DataFrame")
-
-
 class DmnExporter:
     name: str = "dmn"
     file_extension: str = ".dmn"
@@ -131,7 +121,7 @@ class DmnExporter:
         decision_name = options.get("decision_name", "GeneratedDecision")
         table_name = options.get("table_name", "GeneratedTable")
 
-        df = _to_polars(lattice)
+        df = lattice_to_polars(lattice)
         dim_names = {d.dimension_name for d in lattice.metadata.dimensions}
 
         # Range dimensions consume two columns; collect the extra (range_max_field) to skip

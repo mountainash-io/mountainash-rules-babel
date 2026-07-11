@@ -1,7 +1,7 @@
 import polars as pl
-from mountainash_utils_rules.constants import MatchStrategy
-from mountainash_utils_rules.dimension import Dimension, DimensionsMetadata
-from mountainash_utils_rules.lattice import Lattice
+from mountainash_rules.constants import MatchStrategy
+from mountainash_rules.dimension import Dimension, DimensionsMetadata
+from mountainash_rules.lattice import Lattice
 
 from mountainash_rules_babel.validators.round_trip import RoundTripValidator
 from mountainash_rules_babel.validators.conflicts import ConflictsValidator

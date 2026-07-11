@@ -4,9 +4,9 @@ import typing as t
 from dataclasses import dataclass, field
 from typing import Protocol, runtime_checkable
 
-from mountainash_utils_rules.aggregate import Aggregate
-from mountainash_utils_rules.dimension import DimensionsMetadata
-from mountainash_utils_rules.lattice import Lattice
+from mountainash_rules.aggregate import Aggregate
+from mountainash_rules.dimension import DimensionsMetadata
+from mountainash_rules.lattice import Lattice
 
 from mountainash_rules_babel.validators.base import ValidationReport
 

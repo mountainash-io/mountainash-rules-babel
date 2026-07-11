@@ -24,7 +24,7 @@ def test_csv_import_infers_match_strategy():
         FIXTURES / "pricing_3row.csv",
         dimension_columns=["country", "product"],
     )
-    from mountainash_utils_rules.constants import MatchStrategy
+    from mountainash_rules.constants import MatchStrategy
 
     for dim in lattice.metadata.dimensions:
         assert dim.match_strategy == MatchStrategy.EXACT
