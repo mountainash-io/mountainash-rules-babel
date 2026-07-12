@@ -65,3 +65,63 @@ class TestLatticeManifest:
 
     def test_error_type_exists(self):
         assert issubclass(SchemaContractError, Exception)
+
+
+from mountainash_rules_babel.exporters.base import resolve_lattice
+
+
+class TestResolveLattice:
+    def test_composed_values_are_coalesced_under_flat_names(self):
+        view = resolve_lattice(_composed_lattice())
+        assert view.is_composed is True
+        # co_lvr_min renamed to lvr_min; the coalesced pair row [70, 80]
+        # must exist (the R2 singleton [70, 90] also legitimately survives
+        # the frontier under its own fingerprint)
+        pairs = view.df.filter(pl.col("lvr_min") == 70)
+        assert 80 in pairs["lvr_max"].to_list()
+
+    def test_composed_drops_stale_columns(self):
+        view = resolve_lattice(_composed_lattice())
+        assert "rule_name" in view.dropped_stale
+        assert not any(c.startswith("co_") for c in view.df.columns)
+        assert not any(c.startswith("__") for c in view.df.columns)
+
+    def test_composed_output_columns_are_renamed_aggregates_only(self):
+        view = resolve_lattice(_composed_lattice())
+        assert view.output_columns == ["margin"]
+        assert "margin" in view.df.columns
+
+    def test_composed_tracking_split_out(self):
+        view = resolve_lattice(_composed_lattice(), include_tracking=True)
+        assert view.tracking is not None
+        assert "__prime_product" in view.tracking.columns
+
+    def test_flat_passthrough(self):
+        view = resolve_lattice(_flat_lattice())
+        assert view.is_composed is False
+        assert view.output_columns == ["margin"]
+        assert view.dropped_stale == []
+
+    def test_flat_with_tracking_columns_is_mixed_shape(self):
+        bad = Lattice(
+            dataframe=pl.DataFrame({
+                "rule_name": ["r"], "region": ["AU"],
+                "lvr_min": [0], "lvr_max": [1], "margin": [0.0],
+                "__level": [1],
+            }),
+            metadata=_metadata(), aggregates=[], partition_key=None,
+        )
+        with pytest.raises(SchemaContractError, match="__level"):
+            resolve_lattice(bad)
+
+    def test_flat_user_co_column_is_legal(self):
+        ok = Lattice(
+            dataframe=pl.DataFrame({
+                "rule_name": ["r"], "region": ["AU"],
+                "lvr_min": [0], "lvr_max": [1], "margin": [0.0],
+                "co_brand": ["x"],
+            }),
+            metadata=_metadata(), aggregates=[], partition_key=None,
+        )
+        view = resolve_lattice(ok)
+        assert "co_brand" in view.df.columns
