@@ -40,3 +40,7 @@ class ValidationError(BabelError):
 
 class DependencyMissingError(BabelError, ImportError):
     pass
+
+
+class SchemaContractError(BabelError):
+    """A lattice frame violates the flat/composed schema contract."""
