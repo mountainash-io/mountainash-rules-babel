@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pathlib
 from pathlib import Path
 
 import polars as pl
@@ -18,11 +19,37 @@ class CsvImporter:
         self,
         path: Path,
         *,
+        metadata: DimensionsMetadata | str | Path | None = None,
         dimension_columns: list[str] | None = None,
         aggregate_columns: dict[str, str] | None = None,
         **options,
     ) -> Lattice:
         df = pl.read_csv(path)
+
+        if metadata is not None:
+            if isinstance(metadata, (str, pathlib.Path)):
+                metadata = DimensionsMetadata.from_yaml_file(metadata)
+            missing: list[str] = []
+            for dim in metadata.dimensions:
+                if dim.match_strategy == MatchStrategy.RANGE:
+                    needed = [dim.range_min_field, dim.range_max_field]
+                else:
+                    needed = [dim.resolved_rule_field]
+                missing.extend(c for c in needed if c not in df.columns)
+            if missing:
+                raise ValueError(
+                    f"Metadata references columns missing from CSV: {missing}"
+                )
+            aggregates = [
+                Aggregate(column_name=c, operation=op)
+                for c, op in (aggregate_columns or {}).items()
+            ]
+            return Lattice(
+                dataframe=df,
+                metadata=metadata,
+                aggregates=aggregates,
+                partition_key=None,
+            )
 
         if dimension_columns is None:
             non_agg = set((aggregate_columns or {}).keys())

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from lxml import etree
 
-from mountainash_rules.constants import MatchStrategy
+from mountainash_rules.constants import DataType, MatchStrategy
 from mountainash_rules.dimension import Dimension
 from mountainash_rules.lattice import Lattice
 
@@ -15,9 +15,13 @@ DMN_NS = "https://www.omg.org/spec/DMN/20191111/MODEL/"
 NSMAP = {None: DMN_NS}
 
 
-def _type_ref(data_type: type) -> str:
-    if data_type in (int, float):
+def _type_ref(data_type: DataType) -> str:
+    if data_type.is_numeric:
         return "number"
+    if data_type is DataType.BOOL:
+        return "boolean"
+    if data_type.is_temporal:
+        return "date"
     return "string"
 
 
@@ -39,13 +43,13 @@ def _feel_entry(value: t.Any, dim: Dimension) -> str:
         return ""
 
     if strategy == MatchStrategy.EXACT:
-        if dtype == str:
+        if dtype is DataType.STR:
             escaped = str(value).replace('"', '\\"')
             return f'"{escaped}"'
         return str(value)
 
     elif strategy == MatchStrategy.NOT_EQUAL:
-        if dtype == str:
+        if dtype is DataType.STR:
             escaped = str(value).replace('"', '\\"')
             return f'not("{escaped}")'
         return f"not({value})"
