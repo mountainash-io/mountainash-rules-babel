@@ -23,13 +23,18 @@ def _make_lattice() -> Lattice:
     )
 
 
-def test_round_trip_stub_is_fail_closed():
+def test_round_trip_csv_is_implemented():
     v = RoundTripValidator()
     report = v.validate(_make_lattice())
+    assert report.is_valid is True
+    assert report.exact_match is True
+
+
+def test_round_trip_other_formats_fail_closed():
+    v = RoundTripValidator()
+    report = v.validate(_make_lattice(), format="dmn")
     assert report.is_valid is False
-    assert len(report.warnings) == 1
     assert report.warnings[0].category == "not_implemented"
-    assert "round_trip" in report.warnings[0].message
 
 
 def test_conflicts_stub_is_fail_closed():

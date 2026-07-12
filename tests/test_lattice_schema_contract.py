@@ -241,3 +241,34 @@ class TestDmnContract:
             d.text for d in tree.findall(".//dmn:rule/dmn:description", NS)
         ]
         assert descs and all(d.startswith("prime_product=") for d in descs)
+
+
+from mountainash_rules_babel.validators.round_trip import RoundTripValidator
+
+
+class TestRoundTrip:
+    def test_full_csv_round_trip(self, tmp_path):
+        original = _composed_lattice()
+        view = resolve_lattice(original)
+        p = CsvExporter().export(original, tmp_path / "rt.csv")
+        imported = CsvImporter().import_lattice(p)
+
+        cols = sorted(view.df.columns)
+        imported_df = pl.DataFrame(imported.combinations).select(cols)
+        # CSV widens ints; cast expected to the imported schema first
+        expected_df = view.df.select(cols).cast(imported_df.schema)
+        assert imported_df.sort(cols).equals(expected_df.sort(cols))
+        assert imported.metadata == original.metadata
+
+    def test_round_trip_validator_passes_csv(self, tmp_path):
+        report = RoundTripValidator().validate(
+            _composed_lattice(), format="csv", workdir=tmp_path
+        )
+        assert report.is_valid
+        assert report.exact_match is True
+
+    def test_round_trip_validator_fails_closed_on_dmn(self, tmp_path):
+        report = RoundTripValidator().validate(
+            _composed_lattice(), format="dmn", workdir=tmp_path
+        )
+        assert not report.is_valid
