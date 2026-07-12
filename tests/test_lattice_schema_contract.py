@@ -154,3 +154,40 @@ class TestCsvExport:
         manifest = LatticeManifest.from_yaml_file(tmp_path / "out.manifest.yaml")
         assert manifest.dimensions == _metadata()
         assert manifest.aggregates[0].column_name == "margin"
+
+
+import warnings
+
+from mountainash_rules_babel.importers.csv_ import CsvImporter
+
+
+class TestCsvImportContract:
+    def _export(self, tmp_path, **kwargs):
+        return CsvExporter().export(
+            _composed_lattice(), tmp_path / "out.csv", **kwargs
+        )
+
+    def test_sidecar_autoloaded(self, tmp_path):
+        p = self._export(tmp_path)
+        lattice = CsvImporter().import_lattice(p)
+        assert lattice.metadata == _metadata()
+        assert lattice.aggregates[0].column_name == "margin"
+
+    def test_empty_cells_become_typed_sentinels(self, tmp_path):
+        p = self._export(tmp_path)
+        lattice = CsvImporter().import_lattice(p)
+        df = pl.DataFrame(lattice.combinations)
+        # R2's region was <NA> -> exported empty -> re-imported as UNKNOWN
+        assert UNKNOWN in df["region"].to_list()
+        assert df["lvr_min"].null_count() == 0
+        assert df["lvr_max"].null_count() == 0
+
+    def test_tracking_columns_stripped_with_warning(self, tmp_path):
+        p = self._export(tmp_path, include_tracking=True)
+        with pytest.warns(UserWarning, match="__prime_product"):
+            lattice = CsvImporter().import_lattice(p)
+        assert lattice.is_composed is False
+
+    def test_import_is_always_flat(self, tmp_path):
+        p = self._export(tmp_path)
+        assert CsvImporter().import_lattice(p).is_composed is False
