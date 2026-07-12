@@ -125,3 +125,32 @@ class TestResolveLattice:
         )
         view = resolve_lattice(ok)
         assert "co_brand" in view.df.columns
+
+
+from mountainash_rules_babel.exporters.csv_ import CsvExporter
+
+
+class TestCsvExport:
+    def test_composed_export_has_flat_names_no_tracking(self, tmp_path):
+        p = CsvExporter().export(_composed_lattice(), tmp_path / "out.csv")
+        df = pl.read_csv(p)
+        assert "lvr_min" in df.columns and "margin" in df.columns
+        assert not any(c.startswith(("co_", "__")) for c in df.columns)
+
+    def test_sentinels_written_as_empty_cells(self, tmp_path):
+        p = CsvExporter().export(_composed_lattice(), tmp_path / "out.csv")
+        text = p.read_text()
+        assert str(UNKNOWN_NUMERIC) not in text
+        assert UNKNOWN not in text
+
+    def test_include_tracking_appends_columns(self, tmp_path):
+        p = CsvExporter().export(
+            _composed_lattice(), tmp_path / "out.csv", include_tracking=True
+        )
+        assert "__prime_product" in pl.read_csv(p).columns
+
+    def test_manifest_sidecar_written(self, tmp_path):
+        CsvExporter().export(_composed_lattice(), tmp_path / "out.csv")
+        manifest = LatticeManifest.from_yaml_file(tmp_path / "out.manifest.yaml")
+        assert manifest.dimensions == _metadata()
+        assert manifest.aggregates[0].column_name == "margin"
