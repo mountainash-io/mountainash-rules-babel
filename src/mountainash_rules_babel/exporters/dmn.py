@@ -5,14 +5,24 @@ from pathlib import Path
 
 from lxml import etree
 
-from mountainash_rules.constants import DataType, MatchStrategy
+from mountainash_rules.constants import DataType, HitPolicy, MatchStrategy
 from mountainash_rules.dimension import Dimension
 from mountainash_rules.lattice import Lattice
 
-from mountainash_rules_babel.exporters.base import lattice_to_polars
+from mountainash_rules_babel.errors import SchemaContractError
+from mountainash_rules_babel.exporters.base import resolve_lattice
 
 DMN_NS = "https://www.omg.org/spec/DMN/20191111/MODEL/"
 NSMAP = {None: DMN_NS}
+
+_DMN_POLICY = {
+    HitPolicy.COLLECT: "COLLECT",
+    HitPolicy.UNIQUE: "UNIQUE",
+    HitPolicy.FIRST: "FIRST",
+    HitPolicy.PRIORITY: "PRIORITY",
+    HitPolicy.ANY: "ANY",
+    HitPolicy.RULE_ORDER: "RULE ORDER",
+}
 
 
 def _type_ref(data_type: DataType) -> str:
@@ -121,30 +131,28 @@ class DmnExporter:
         path.write_bytes(data)
         return path
 
-    def export_bytes(self, lattice: Lattice, **options) -> bytes:
+    def export_bytes(
+        self,
+        lattice: Lattice,
+        *,
+        include_tracking: bool = False,
+        assume_unique: bool = False,
+        **options,
+    ) -> bytes:
         decision_name = options.get("decision_name", "GeneratedDecision")
         table_name = options.get("table_name", "GeneratedTable")
 
-        df = lattice_to_polars(lattice)
-        dim_names = {d.dimension_name for d in lattice.metadata.dimensions}
+        view = resolve_lattice(lattice, include_tracking=include_tracking)
+        policy = lattice.metadata.hit_policy
+        if view.is_composed and policy == HitPolicy.UNIQUE and not assume_unique:
+            raise SchemaContractError(
+                "hit_policy=unique is unproven for a composed lattice "
+                "(distinct maximal combinations can overlap); run a "
+                "conflicts analysis and pass assume_unique=True to override"
+            )
 
-        # Range dimensions consume two columns; collect the extra (range_max_field) to skip
-        range_extra_cols: set[str] = set()
-        for dim in lattice.metadata.dimensions:
-            if dim.match_strategy == MatchStrategy.RANGE:
-                if dim.range_min_field:
-                    range_extra_cols.add(dim.range_min_field)
-                if dim.range_max_field:
-                    range_extra_cols.add(dim.range_max_field)
-
-        # Output columns: everything that is not a dimension column, not range helper cols,
-        # and not "rule_name"
-        output_cols = [
-            c for c in df.columns
-            if c not in dim_names
-            and c not in range_extra_cols
-            and c != "rule_name"
-        ]
+        df = view.df
+        output_cols = view.output_columns
 
         # Build XML tree
         definitions = etree.Element("definitions", nsmap=NSMAP)
@@ -158,7 +166,7 @@ class DmnExporter:
 
         dt = etree.SubElement(decision, f"{{{DMN_NS}}}decisionTable")
         dt.set("id", f"dt_{table_name}")
-        dt.set("hitPolicy", "UNIQUE")
+        dt.set("hitPolicy", _DMN_POLICY[policy])
 
         # Input elements (one per dimension)
         for dim in lattice.metadata.dimensions:
@@ -182,11 +190,19 @@ class DmnExporter:
 
         # Rules (one per row)
         rows = df.to_dicts()
+        tracking_rows = (
+            view.tracking.to_dicts() if view.tracking is not None else None
+        )
         for row_idx, row in enumerate(rows):
             rule_el = etree.SubElement(dt, f"{{{DMN_NS}}}rule")
             rule_el.set("id", f"rule_{row_idx}")
+            if tracking_rows is not None:
+                desc = etree.SubElement(rule_el, f"{{{DMN_NS}}}description")
+                desc.text = (
+                    f"prime_product={tracking_rows[row_idx]['__prime_product']}"
+                )
 
-            # Input entries
+            # Input entries (view.df carries resolved flat names)
             for dim in lattice.metadata.dimensions:
                 ie = etree.SubElement(rule_el, f"{{{DMN_NS}}}inputEntry")
                 ie.set("id", f"ie_{row_idx}_{dim.dimension_name}")
@@ -195,8 +211,7 @@ class DmnExporter:
                 if dim.match_strategy == MatchStrategy.RANGE:
                     text_el.text = _feel_range_entry(row, dim)
                 else:
-                    col = dim.dimension_name
-                    value = row.get(col)
+                    value = row.get(dim.resolved_rule_field)
                     text_el.text = _feel_entry(value, dim)
 
             # Output entries

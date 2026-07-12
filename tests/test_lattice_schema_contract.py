@@ -191,3 +191,53 @@ class TestCsvImportContract:
     def test_import_is_always_flat(self, tmp_path):
         p = self._export(tmp_path)
         assert CsvImporter().import_lattice(p).is_composed is False
+
+
+from lxml import etree
+
+from mountainash_rules.constants import HitPolicy
+
+from mountainash_rules_babel.exporters.dmn import DmnExporter
+
+
+def _dmn_tree(lattice, **options):
+    data = DmnExporter().export_bytes(lattice, **options)
+    return etree.fromstring(data)
+
+
+NS = {"dmn": "https://www.omg.org/spec/DMN/20191111/MODEL/"}
+
+
+class TestDmnContract:
+    def test_composed_inputs_are_coalesced(self):
+        tree = _dmn_tree(_composed_lattice())
+        entries = [
+            e.text for e in tree.findall(".//dmn:inputEntry/dmn:text", NS)
+        ]
+        assert "[70..80]" in entries  # the coalesced pair, not a seed rule
+
+    def test_no_internal_columns_in_outputs(self):
+        tree = _dmn_tree(_composed_lattice())
+        labels = [o.get("label") for o in tree.findall(".//dmn:output", NS)]
+        assert labels == ["margin"]
+
+    def test_hit_policy_from_metadata_default_collect(self):
+        tree = _dmn_tree(_composed_lattice())
+        dt = tree.find(".//dmn:decisionTable", NS)
+        assert dt.get("hitPolicy") == "COLLECT"
+
+    def test_unique_on_composed_fails_closed(self):
+        lattice = _composed_lattice()
+        lattice.metadata.hit_policy = HitPolicy.UNIQUE
+        with pytest.raises(SchemaContractError, match="unique"):
+            DmnExporter().export_bytes(lattice)
+        # assume_unique overrides
+        data = DmnExporter().export_bytes(lattice, assume_unique=True)
+        assert b'hitPolicy="UNIQUE"' in data
+
+    def test_include_tracking_adds_rule_description(self):
+        tree = _dmn_tree(_composed_lattice(), include_tracking=True)
+        descs = [
+            d.text for d in tree.findall(".//dmn:rule/dmn:description", NS)
+        ]
+        assert descs and all(d.startswith("prime_product=") for d in descs)
