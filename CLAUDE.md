@@ -17,7 +17,7 @@ Mountain Ash Rules Babel (`mountainash_rules_babel`) is the format interchange l
 The core invariant of this repo. A lattice is **composed** (out of `AccumulatorEngine.build()`, detected by `Lattice.is_composed` / the `__prime_product` column) or **flat**. On a composed lattice the anchor rule's plain columns are **stale**; only `co_*` (coalesced values), `__agg_*` (aggregates), and tracking columns (`__prime`, `__prime_product`, `__level`) are meaningful.
 
 - `exporters/base.py :: resolve_lattice(lattice, include_tracking=False) -> LatticeView` is the single normaliser: it emits authoritative values under flat names, renames `__agg_<x>` → `<x>`, drops stale/NA-flag columns, splits tracking out, and raises `SchemaContractError` on mixed shapes. **Every exporter must read a `LatticeView`, never the raw frame.**
-- Don't-care values are in-band typed sentinels inside frames (`mountainash_rules.constants.sentinels_for`) and **empty cells** at the CSV boundary (nulled on export, refilled to UNKNOWN sentinels on import).
+- Don't-care values are in-band typed sentinels inside frames (`mountainash_rules.sentinels_for`) and **empty cells** at the CSV boundary (nulled on export, refilled to UNKNOWN sentinels on import).
 - **Imports are always flat** — tracking columns are stripped with a `UserWarning`; recombination is `AccumulatorEngine.build()`'s job.
 - `manifest.py :: LatticeManifest` (DimensionsMetadata + aggregate specs) is written as a `<stem>.manifest.yaml` sidecar by `CsvExporter` and autoloaded by `CsvImporter`.
 - `DmnExporter` takes `hitPolicy` from `metadata.hit_policy` and fails closed (`SchemaContractError`) on UNIQUE for a composed lattice unless `assume_unique=True`.
@@ -55,6 +55,8 @@ src/mountainash_rules_babel/
 ## Dependencies
 
 `mountainash-rules` (sibling checkout, see hatch.toml), `polars`, `lxml`, `typer`, `pyyaml`. Optional extras: `jdm` (zen-engine), `flagd` (python-jsonlogic), `decompose` (hyfd). XML must always be parsed through `xml_security.py` helpers.
+
+`mountainash_rules` module paths are private — import public names from the package root only (`from mountainash_rules import Lattice`).
 
 ## Code Style
 

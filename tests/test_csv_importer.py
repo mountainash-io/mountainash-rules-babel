@@ -24,7 +24,7 @@ def test_csv_import_infers_match_strategy():
         FIXTURES / "pricing_3row.csv",
         dimension_columns=["country", "product"],
     )
-    from mountainash_rules.constants import MatchStrategy
+    from mountainash_rules import MatchStrategy
 
     for dim in lattice.metadata.dimensions:
         assert dim.match_strategy == MatchStrategy.EXACT
@@ -38,8 +38,8 @@ def test_csv_importer_protocol_fields():
 
 def test_import_with_explicit_metadata_produces_range_dimension(tmp_path):
     import polars as pl
-    from mountainash_rules.constants import DataType, MatchStrategy
-    from mountainash_rules.dimension import Dimension, DimensionsMetadata
+    from mountainash_rules import DataType, MatchStrategy
+    from mountainash_rules import Dimension, DimensionsMetadata
     from mountainash_rules_babel.importers.csv_ import CsvImporter
 
     csv = tmp_path / "rules.csv"
@@ -60,8 +60,8 @@ def test_import_with_explicit_metadata_produces_range_dimension(tmp_path):
 def test_import_with_metadata_missing_range_column_raises(tmp_path):
     import polars as pl
     import pytest
-    from mountainash_rules.constants import DataType, MatchStrategy
-    from mountainash_rules.dimension import Dimension, DimensionsMetadata
+    from mountainash_rules import DataType, MatchStrategy
+    from mountainash_rules import Dimension, DimensionsMetadata
     from mountainash_rules_babel.importers.csv_ import CsvImporter
 
     csv = tmp_path / "rules.csv"
@@ -79,7 +79,7 @@ def test_import_with_metadata_missing_range_column_raises(tmp_path):
 
 def test_import_with_metadata_yaml_path(tmp_path):
     import polars as pl
-    from mountainash_rules.dimension import Dimension, DimensionsMetadata
+    from mountainash_rules import Dimension, DimensionsMetadata
     from mountainash_rules_babel.importers.csv_ import CsvImporter
 
     csv = tmp_path / "rules.csv"

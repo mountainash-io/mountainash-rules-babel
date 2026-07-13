@@ -3,15 +3,13 @@
 import polars as pl
 import pytest
 
-from mountainash_rules.aggregate import Aggregate
-from mountainash_rules.accumulator_engine import AccumulatorEngine
-from mountainash_rules.constants import (
+from mountainash_rules import AccumulatorEngine, Aggregate
+from mountainash_rules import (
     UNKNOWN,
     UNKNOWN_NUMERIC,
     MatchStrategy,
 )
-from mountainash_rules.dimension import Dimension, DimensionsMetadata
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Dimension, DimensionsMetadata, Lattice
 
 from mountainash_rules_babel.errors import SchemaContractError
 from mountainash_rules_babel.manifest import LatticeManifest
@@ -195,7 +193,7 @@ class TestCsvImportContract:
 
 from lxml import etree
 
-from mountainash_rules.constants import HitPolicy
+from mountainash_rules import HitPolicy
 
 from mountainash_rules_babel.exporters.dmn import DmnExporter
 

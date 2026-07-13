@@ -4,7 +4,7 @@ from pathlib import Path
 
 import polars as pl
 
-from mountainash_rules.constants import (
+from mountainash_rules import (
     NOT_SET,
     NOT_SET_DATE,
     NOT_SET_DATETIME,
@@ -14,7 +14,7 @@ from mountainash_rules.constants import (
     UNKNOWN_DATETIME,
     UNKNOWN_NUMERIC,
 )
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Lattice
 
 from mountainash_rules_babel.exporters.base import resolve_lattice
 from mountainash_rules_babel.manifest import LatticeManifest

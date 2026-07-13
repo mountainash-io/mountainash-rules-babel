@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal, Protocol, runtime_checkable
 
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Lattice
 
 
 @dataclass

@@ -39,7 +39,7 @@ the raw frame.
 Inside frames, don't-care is encoded **in-band** with typed sentinels
 (`<NA>` / `<NOT_SET>` for strings, `-999999999` / `-999999998` for numerics,
 and the temporal `UNKNOWN_DATE`/`NOT_SET_DATE` family — see
-`mountainash_rules.constants.sentinels_for`). At the CSV boundary sentinels
+`mountainash_rules.sentinels_for`). At the CSV boundary sentinels
 become **empty cells** on export, and empty cells in dimension columns are
 filled back to the type's UNKNOWN sentinel on import, so a CSV round trip is
 lossless (`RoundTripValidator` verifies exactly this).

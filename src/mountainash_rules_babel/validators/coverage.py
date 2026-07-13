@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Lattice
 
 from mountainash_rules_babel.validators.base import ValidationIssue, ValidationReport
 

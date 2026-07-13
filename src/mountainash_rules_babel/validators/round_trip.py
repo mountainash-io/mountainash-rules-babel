@@ -5,7 +5,7 @@ from pathlib import Path
 
 import polars as pl
 
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Lattice
 
 from mountainash_rules_babel.exporters.base import resolve_lattice
 from mountainash_rules_babel.exporters.csv_ import CsvExporter

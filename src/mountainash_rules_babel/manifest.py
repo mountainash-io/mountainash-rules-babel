@@ -7,8 +7,7 @@ import pathlib
 import yaml
 from pydantic import BaseModel, Field
 
-from mountainash_rules.dimension import DimensionsMetadata
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import DimensionsMetadata, Lattice
 
 
 class AggregateSpec(BaseModel):

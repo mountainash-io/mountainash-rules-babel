@@ -5,7 +5,7 @@ from typing import Protocol, runtime_checkable
 
 import polars as pl
 
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Lattice
 
 
 @runtime_checkable
@@ -30,8 +30,7 @@ def lattice_to_polars(lattice: Lattice) -> pl.DataFrame:
 
 from dataclasses import dataclass, field
 
-from mountainash_rules.constants import MatchStrategy
-from mountainash_rules.dimension import DimensionsMetadata
+from mountainash_rules import DimensionsMetadata, MatchStrategy
 
 from mountainash_rules_babel.errors import SchemaContractError
 

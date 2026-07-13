@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 import typing as t
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 
-from mountainash_rules.aggregate import Aggregate
-from mountainash_rules.dimension import DimensionsMetadata
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Aggregate, DimensionsMetadata, Lattice
 
 from mountainash_rules_babel.validators.base import ValidationReport
 

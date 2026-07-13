@@ -3,10 +3,7 @@ from pathlib import Path
 
 import polars as pl
 from lxml import etree
-from mountainash_rules.aggregate import Aggregate
-from mountainash_rules.constants import MatchStrategy
-from mountainash_rules.dimension import Dimension, DimensionsMetadata
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import Aggregate, Dimension, DimensionsMetadata, Lattice, MatchStrategy
 
 from mountainash_rules_babel.exporters.dmn import DmnExporter
 

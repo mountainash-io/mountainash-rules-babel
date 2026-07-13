@@ -5,9 +5,7 @@ from pathlib import Path
 
 from lxml import etree
 
-from mountainash_rules.constants import DataType, HitPolicy, MatchStrategy
-from mountainash_rules.dimension import Dimension
-from mountainash_rules.lattice import Lattice
+from mountainash_rules import DataType, Dimension, HitPolicy, Lattice, MatchStrategy
 
 from mountainash_rules_babel.errors import SchemaContractError
 from mountainash_rules_babel.exporters.base import resolve_lattice

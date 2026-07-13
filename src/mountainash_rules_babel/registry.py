@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.metadata
 import logging
-import typing as t
 
 from mountainash_rules_babel.decomposers.base import Decomposer
 from mountainash_rules_babel.errors import FormatNotFoundError
