@@ -7,6 +7,7 @@ from pathlib import Path
 
 from mountainash_rules_babel.__version__ import __version__
 from mountainash_rules_babel.errors import FormatNotFoundError
+from mountainash_rules_babel.manifest import AggregateSpec, LatticeManifest
 from mountainash_rules_babel.registry import registry
 from mountainash_rules_babel.validators.base import ValidationIssue, ValidationReport
 
@@ -121,10 +122,12 @@ def _run_validators(
 
 __all__ = (
     "__version__",
+    "AggregateSpec",
     "compose",
     "decompose",
     "export_lattice",
     "import_lattice",
+    "LatticeManifest",
     "round_trip",
     "validate",
 )

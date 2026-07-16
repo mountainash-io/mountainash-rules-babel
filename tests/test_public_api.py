@@ -70,3 +70,19 @@ def test_validate_returns_fail_closed_report():
     assert report.is_valid is False
     assert len(report.warnings) > 0
     assert all(w.category == "not_implemented" for w in report.warnings)
+
+
+def test_serving_names_importable_from_root():
+    from mountainash_rules_babel import AggregateSpec, LatticeManifest
+
+    assert hasattr(LatticeManifest, "from_yaml_file")
+    assert hasattr(LatticeManifest, "for_lattice")
+    assert AggregateSpec(column_name="discount").operation == "sum"
+
+
+def test_names_in_dunder_all():
+    import mountainash_rules_babel as babel
+
+    assert "LatticeManifest" in babel.__all__
+    assert "AggregateSpec" in babel.__all__
+    assert list(babel.__all__) == sorted(babel.__all__, key=str.lower)
