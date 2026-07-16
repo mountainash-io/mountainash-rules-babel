@@ -23,4 +23,5 @@ so exporting them now would be speculative surface.
 ## Acceptance
 
 - `from mountainash_rules_babel import AggregateSpec, LatticeManifest`
-  works; `__all__` stays sorted; babel suite green (79+); no other changes.
+  works; `__all__` stays sorted; babel suite green at 81 (79 baseline + 2
+  new public-api tests); no other changes.
