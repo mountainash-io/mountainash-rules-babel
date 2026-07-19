@@ -1,6 +1,6 @@
 # mountainash-rules-babel
 
-![Python](https://img.shields.io/badge/python-3.12-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+![Python](https://img.shields.io/badge/python-3.12-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 
 Translate decision logic between formats. Babel moves [mountainash-rules](https://github.com/mountainash-io/mountainash-rules) lattices in and out of external decision formats — CSV (with a metadata manifest sidecar) and DMN today — with validation that round trips are lossless.
 
@@ -77,4 +77,4 @@ Part of the [Mountain Ash](https://github.com/mountainash-io) data framework eco
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE) for details.

@@ -9,6 +9,8 @@ description = "Mountain Ash Rules Babel — translate decision logic between for
 readme = "README.md"
 requires-python = ">=3.12"
 keywords = ["rules", "decision-tables", "dmn", "translation"]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 authors = [
     { name = "Nathaniel Ramm", email = "nathaniel.ramm@discretedatascience.com" },
 ]
