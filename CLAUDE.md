@@ -70,4 +70,4 @@ Same conventions as mountainash-rules: ruff, Google docstrings, `import typing a
 
 ## License
 
-MIT
+Apache-2.0
