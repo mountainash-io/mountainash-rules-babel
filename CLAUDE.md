@@ -66,7 +66,8 @@ Same conventions as mountainash-rules: ruff, Google docstrings, `import typing a
 
 - `docs/lattice-schema.md` — the schema contract (column taxonomy, don't-care encoding, sidecar, DMN rules).
 - `docs/superpowers/specs/` and `docs/superpowers/plans/` — 2026-07 lattice-schema-contract design/plan.
-- `mountainash-central/01.principles/mountainash-rules-babel/` — principles and backlog (ML decomposition pipeline, JDM/flagd exporters, round-trip layers).
+- `mountainash-central/01.principles/mountainash-rules-babel/` — principles (ML decomposition pipeline research context, glossary).
+- `mountainash-central/04.planning/mountainash-rules-babel/a.backlog/README.md` — backlog (ML decomposition pipeline, JDM/flagd exporters, round-trip layers); see that directory's `CHANGELOG.md` for update history.
 
 ## License
 
