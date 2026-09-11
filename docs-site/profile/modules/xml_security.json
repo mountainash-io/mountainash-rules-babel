@@ -1,0 +1,46 @@
+{
+  "id": "mountainash_rules_babel.xml_security",
+  "path": "src/mountainash_rules_babel/xml_security.py",
+  "summary": "Secure XML parsing utilities. Provides a hardened lxml parser (no entity resolution, no network, no DTD, size limit) and a safe_parse function for XML file ingestion.",
+  "role": "io",
+  "visibility": "internal",
+  "stability": "stable",
+  "audiences": ["maintainers", "backend-architecture"],
+  "doc_priority": "reference-only",
+  "confidence": "high",
+  "public_api": [
+    "MAX_FILE_SIZE_BYTES: int — 50 MB default limit",
+    "SAFE_PARSER: etree.XMLParser — hardened parser instance",
+    "safe_parse(path, max_size?) -> etree._ElementTree"
+  ],
+  "key_classes": [],
+  "key_functions": ["safe_parse"],
+  "dependencies": ["lxml"],
+  "dependents": [],
+  "extension_points": [],
+  "lifecycle_notes": [
+    "Not currently imported by any module — likely prepared for DMN import"
+  ],
+  "documentation_hooks": [
+    "Security notes section — XML safety measures"
+  ],
+  "examples": [],
+  "tests": [
+    "tests/test_xml_security.py"
+  ],
+  "risks": [],
+  "open_questions": [
+    "Not imported by any existing module. Likely intended for future DMN importer."
+  ],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/xml_security.py", "detail": "safe_parse function, SAFE_PARSER constant"},
+    {"kind": "test", "path": "tests/test_xml_security.py", "detail": "Tests XML security measures"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

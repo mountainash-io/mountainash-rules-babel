@@ -1,0 +1,73 @@
+{
+  "id": "mountainash_rules_babel.__init__",
+  "path": "src/mountainash_rules_babel/__init__.py",
+  "summary": "Package root. Exposes the public API functions: export_lattice, import_lattice, decompose, validate, compose, round_trip. Orchestrates registry lookups and validator aggregation.",
+  "role": "public-api",
+  "visibility": "public",
+  "stability": "evolving",
+  "audiences": ["users", "maintainers", "backend-architecture"],
+  "doc_priority": "essential",
+  "confidence": "high",
+  "public_api": [
+    "export_lattice(lattice, format, path?, validate?, **options) -> Path | bytes",
+    "import_lattice(path, format?, **options) -> Lattice",
+    "decompose(lattice, strategy?, **options) -> DecompositionResult",
+    "validate(lattice, checks?, **options) -> ValidationReport",
+    "compose(fragments, metadata?, aggregates?, **options) -> Lattice  [NOT IMPLEMENTED]",
+    "round_trip(path, input_format?, output_format?, **options) -> Any  [NOT IMPLEMENTED]"
+  ],
+  "key_classes": [],
+  "key_functions": [
+    "export_lattice",
+    "import_lattice",
+    "decompose",
+    "validate",
+    "compose",
+    "round_trip",
+    "_run_validators"
+  ],
+  "dependencies": [
+    "mountainash_rules_babel.registry",
+    "mountainash_rules_babel.errors",
+    "mountainash_rules_babel.validators.base",
+    "mountainash_rules_babel.__version__"
+  ],
+  "dependents": [
+    "mountainash_rules_babel.cli.main"
+  ],
+  "extension_points": [
+    "Registry-based format dispatch — new formats are discovered via entry points, not by modifying this module"
+  ],
+  "lifecycle_notes": [
+    "compose() and round_trip() are exported in __all__ but raise NotImplementedError",
+    "export_lattice(validate=True) only runs round_trip validator, not full suite"
+  ],
+  "documentation_hooks": [
+    "Primary entry point for all user-facing docs",
+    "Must document which functions are stubs vs implemented"
+  ],
+  "examples": [
+    "docs/quickstart.md — import_lattice, export_lattice, validate usage"
+  ],
+  "tests": [
+    "tests/test_public_api.py"
+  ],
+  "risks": [
+    "compose() and round_trip() in __all__ but unimplemented — misleads users via autocomplete",
+    "validate(lattice) with no checks arg runs all stubs → always fails",
+    "export_lattice(validate=True) silently runs only round_trip, not full suite"
+  ],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/__init__.py", "detail": "__all__ exports 7 names"},
+    {"kind": "doc", "path": "docs/quickstart.md", "detail": "Documents implemented and not-yet-available features"},
+    {"kind": "test", "path": "tests/test_public_api.py", "detail": "Tests public API functions"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

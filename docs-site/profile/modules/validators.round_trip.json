@@ -1,0 +1,52 @@
+{
+  "id": "mountainash_rules_babel.validators.round_trip",
+  "path": "src/mountainash_rules_babel/validators/round_trip.py",
+  "summary": "Round-trip validator stub. Always returns is_valid=False with a not_implemented warning. Intended to verify that export→import round-trips preserve data. Referenced by export_lattice(validate=True).",
+  "role": "backend",
+  "visibility": "internal",
+  "stability": "experimental",
+  "audiences": ["maintainers"],
+  "doc_priority": "internal-note",
+  "confidence": "high",
+  "public_api": [
+    "RoundTripValidator.name = 'round_trip'",
+    "RoundTripValidator.validate(lattice, **options) -> ValidationReport"
+  ],
+  "key_classes": ["RoundTripValidator"],
+  "key_functions": [],
+  "dependencies": [
+    "mountainash_rules.lattice",
+    "mountainash_rules_babel.validators.base"
+  ],
+  "dependents": [
+    "mountainash_rules_babel.__init__ (called by export_lattice(validate=True))"
+  ],
+  "extension_points": [],
+  "lifecycle_notes": [
+    "Stub — always returns not_implemented",
+    "Registered via entry point: mountainash_babel.validators: round_trip",
+    "export_lattice(validate=True) hardcodes this validator name"
+  ],
+  "documentation_hooks": [],
+  "examples": [],
+  "tests": [
+    "tests/test_validators.py"
+  ],
+  "risks": [
+    "export_lattice(validate=True) always raises ValidationError because this is a stub",
+    "Contributes to validate() always failing when run without explicit checks list"
+  ],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/validators/round_trip.py", "detail": "Stub returning not_implemented"},
+    {"kind": "config", "path": "pyproject.toml", "detail": "round_trip = mountainash_rules_babel.validators.round_trip:RoundTripValidator"},
+    {"kind": "import", "path": "src/mountainash_rules_babel/__init__.py:37", "detail": "_run_validators(lattice, ['round_trip'])"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

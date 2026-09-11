@@ -1,0 +1,60 @@
+{
+  "id": "mountainash_rules_babel.validators.base",
+  "path": "src/mountainash_rules_babel/validators/base.py",
+  "summary": "Validator protocol and result models. Defines ValidationIssue (severity/category/message), ValidationReport (with computed errors/warnings properties and domain counters), and the Validator runtime-checkable protocol.",
+  "role": "protocol",
+  "visibility": "semi-public",
+  "stability": "stable",
+  "audiences": ["users", "extension-authors", "maintainers", "backend-architecture"],
+  "doc_priority": "essential",
+  "confidence": "high",
+  "public_api": [
+    "ValidationIssue(severity: 'error'|'warning'|'info', category: str, message: str, details?: dict)",
+    "ValidationReport(is_valid, issues, input_row_count?, output_row_count?, exact_match?, fragment_count?, combination_count?, conflict_count, coverage_gap_count, orphan_count)",
+    "ValidationReport.errors -> list[ValidationIssue]",
+    "ValidationReport.warnings -> list[ValidationIssue]",
+    "Validator(Protocol) — name: str, validate(lattice, **options) -> ValidationReport"
+  ],
+  "key_classes": ["ValidationIssue", "ValidationReport", "Validator"],
+  "key_functions": [],
+  "dependencies": ["mountainash_rules.lattice"],
+  "dependents": [
+    "mountainash_rules_babel.__init__",
+    "mountainash_rules_babel.errors",
+    "mountainash_rules_babel.registry",
+    "mountainash_rules_babel.decomposers.base",
+    "mountainash_rules_babel.validators.conflicts",
+    "mountainash_rules_babel.validators.coverage",
+    "mountainash_rules_babel.validators.orphans",
+    "mountainash_rules_babel.validators.round_trip"
+  ],
+  "extension_points": [
+    "Validator protocol — implement to add new validation checks"
+  ],
+  "lifecycle_notes": [
+    "ValidationReport has domain-specific counters (conflict_count, coverage_gap_count, orphan_count) that correspond to planned validators"
+  ],
+  "documentation_hooks": [
+    "Validation system architecture docs",
+    "Extension author guide — how to implement a Validator"
+  ],
+  "examples": [],
+  "tests": [
+    "tests/test_protocols.py",
+    "tests/test_validators.py"
+  ],
+  "risks": [],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/validators/base.py", "detail": "3 classes: ValidationIssue, ValidationReport, Validator protocol"},
+    {"kind": "test", "path": "tests/test_protocols.py", "detail": "Tests protocol conformance"},
+    {"kind": "test", "path": "tests/test_validators.py", "detail": "Tests validator behavior"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

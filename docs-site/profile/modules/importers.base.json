@@ -1,0 +1,45 @@
+{
+  "id": "mountainash_rules_babel.importers.base",
+  "path": "src/mountainash_rules_babel/importers/base.py",
+  "summary": "Importer protocol. Defines the runtime-checkable Importer interface: name, file_extensions, import_lattice(path, **options) -> Lattice.",
+  "role": "protocol",
+  "visibility": "semi-public",
+  "stability": "stable",
+  "audiences": ["extension-authors", "maintainers", "backend-architecture"],
+  "doc_priority": "useful",
+  "confidence": "high",
+  "public_api": [
+    "Importer(Protocol) — name: str, file_extensions: list[str], import_lattice(path, **options) -> Lattice"
+  ],
+  "key_classes": ["Importer"],
+  "key_functions": [],
+  "dependencies": ["mountainash_rules.lattice"],
+  "dependents": [
+    "mountainash_rules_babel.registry",
+    "mountainash_rules_babel.importers.csv_"
+  ],
+  "extension_points": [
+    "Importer protocol — implement to add new import formats"
+  ],
+  "lifecycle_notes": [],
+  "documentation_hooks": [
+    "Extension author guide — how to implement an Importer"
+  ],
+  "examples": [],
+  "tests": [
+    "tests/test_protocols.py"
+  ],
+  "risks": [],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/importers/base.py", "detail": "Importer protocol with 3 members"},
+    {"kind": "test", "path": "tests/test_protocols.py", "detail": "Tests protocol conformance"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}
