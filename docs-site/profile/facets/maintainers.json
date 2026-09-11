@@ -1,0 +1,59 @@
+{
+  "audience": "maintainers",
+  "summary": "mountainash-rules-babel is built on a protocol-based plugin architecture with entry-point discovery. Key maintenance areas include the registry and its plugin lifecycle, the DMN FEEL expression generator, the validator pipeline (including several stub validators ready for implementation), and the cross-package dependency on mountainash-rules for domain types.",
+  "concepts": [
+    {
+      "name": "Plugin Architecture",
+      "module_ids": [
+        "mountainash_rules_babel.registry",
+        "mountainash_rules_babel.exporters.base",
+        "mountainash_rules_babel.importers.base",
+        "mountainash_rules_babel.decomposers.base",
+        "mountainash_rules_babel.validators.base"
+      ],
+      "description": "The registry discovers plugins via importlib.metadata entry point groups configured in pyproject.toml. Each plugin axis uses a @runtime_checkable Protocol, so new formats can be added by implementing the protocol and registering an entry point. The discover() method handles loading and caching."
+    },
+    {
+      "name": "Backlog: Known Issues",
+      "module_ids": ["mountainash_rules_babel.validators.coverage"],
+      "description": "The backlog (docs/backlog.md) tracks known issues including BUG-001 (incorrect import path in coverage validator). Check the backlog before starting maintenance work to stay aware of known edge cases."
+    },
+    {
+      "name": "Stub Validators",
+      "module_ids": [
+        "mountainash_rules_babel.validators.conflicts",
+        "mountainash_rules_babel.validators.coverage",
+        "mountainash_rules_babel.validators.orphans",
+        "mountainash_rules_babel.validators.round_trip"
+      ],
+      "description": "Four validators (conflicts, coverage, orphans, round_trip) are registered as entry points but currently return 'not_implemented' findings. These are ready for implementation and are tracked as STUB-001 through STUB-004 in the backlog."
+    },
+    {
+      "name": "Design Considerations",
+      "module_ids": ["mountainash_rules_babel.__init__", "mountainash_rules_babel.registry"],
+      "description": "The public API in __all__ includes compose() and round_trip(), which are forward-looking placeholders. The validate() function aggregates all validators including stubs. The registry handles load failures silently at DEBUG level. These design choices are tracked as RISK-001 through RISK-004 in the backlog for future refinement."
+    },
+    {
+      "name": "DMN FEEL Generation",
+      "module_ids": ["mountainash_rules_babel.exporters.dmn"],
+      "description": "The _feel_entry function maps all 11 MatchStrategy variants to FEEL expressions. When new match strategies are added to mountainash-rules, the FEEL mapping must be extended here to maintain complete DMN export coverage."
+    },
+    {
+      "name": "XML Security",
+      "module_ids": ["mountainash_rules_babel.xml_security"],
+      "description": "A hardened XML parser module is available for use in future XML-based importers (e.g., DMN import). It provides protection against common XML attack vectors and is ready for integration when DMN import capabilities are added."
+    },
+    {
+      "name": "Cross-Package Dependencies",
+      "module_ids": [],
+      "description": "The package depends on mountainash-rules for all domain types (Lattice, Dimension, DimensionsMetadata, Aggregate, MatchStrategy). The test environment additionally requires mountainash-data, mountainash, and mountainash-settings. Keep these dependencies aligned when updating across the mountainash ecosystem."
+    }
+  ],
+  "featured_modules": [
+    "mountainash_rules_babel.registry",
+    "mountainash_rules_babel.exporters.dmn",
+    "mountainash_rules_babel.validators.base"
+  ],
+  "hidden_or_internal_modules": [],
+  "open_questions": []
+}

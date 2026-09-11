@@ -1,0 +1,49 @@
+{
+  "id": "mountainash_rules_babel.exporters.csv_",
+  "path": "src/mountainash_rules_babel/exporters/csv_.py",
+  "summary": "CSV exporter backend. Converts a Lattice to a Polars DataFrame and writes CSV via polars.write_csv. Supports both file and bytes output. Falls back to mountainash.relations for non-Polars backends.",
+  "role": "backend",
+  "visibility": "internal",
+  "stability": "stable",
+  "audiences": ["maintainers", "backend-architecture"],
+  "doc_priority": "reference-only",
+  "confidence": "high",
+  "public_api": [
+    "CsvExporter.name = 'csv'",
+    "CsvExporter.file_extension = '.csv'",
+    "CsvExporter.export(lattice, path, **options) -> Path",
+    "CsvExporter.export_bytes(lattice, **options) -> bytes"
+  ],
+  "key_classes": ["CsvExporter"],
+  "key_functions": ["_to_polars"],
+  "dependencies": [
+    "polars",
+    "mountainash_rules.lattice",
+    "mountainash.relations (optional, for non-polars backends)"
+  ],
+  "dependents": [],
+  "extension_points": [],
+  "lifecycle_notes": [
+    "Registered via entry point: mountainash_babel.exporters: csv"
+  ],
+  "documentation_hooks": [],
+  "examples": [
+    "docs/quickstart.md — export_lattice(lattice, format='csv', path=...)"
+  ],
+  "tests": [
+    "tests/test_csv_exporter.py"
+  ],
+  "risks": [],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "config", "path": "pyproject.toml", "detail": "csv = mountainash_rules_babel.exporters.csv_:CsvExporter"},
+    {"kind": "test", "path": "tests/test_csv_exporter.py", "detail": "Tests CSV export to file and bytes"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

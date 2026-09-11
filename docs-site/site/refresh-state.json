@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "baseline": {
+    "source_commit": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+    "refresh_date": "2026-06-04T12:47:45Z",
+    "tool_versions": {
+      "python": "3.12",
+      "enrich_script": "1.0.0"
+    }
+  },
+  "chapter_state": {
+    "01-foundations": {
+      "content_hash": "5afc927653656a4f8cb909e6a8f60a5925db741a1378aef3bbc71e31a11183be",
+      "word_count": 2435,
+      "has_concept_markers": true
+    },
+    "02-python-plugin-infrastructure": {
+      "content_hash": "24c0e16e351bf9128ed992f3c8af4a6afc0296d78329702dd40558d7106377e2",
+      "word_count": 2031,
+      "has_concept_markers": true
+    },
+    "03-plugin-extension-points": {
+      "content_hash": "7f74bcc6c60cc609884dadff8ae6235fe11162246ef8c31b31ee83ee3e39c3e3",
+      "word_count": 1866,
+      "has_concept_markers": true
+    },
+    "04-importers": {
+      "content_hash": "1c99d8971150bb55c402cb81d71ae1f30ea309da58bdb19d57c07f2c585c3711",
+      "word_count": 2035,
+      "has_concept_markers": true
+    },
+    "05-exporter-architecture": {
+      "content_hash": "a88bceef4fe2e9d929ba9a65aa697a63a81726c0dfd7b1ca3d80055823c169a9",
+      "word_count": 1773,
+      "has_concept_markers": true
+    },
+    "06-dmn-xml-construction": {
+      "content_hash": "e6c71bba93f12ba9621803556f84d5b569f6eb943608ba00f1cf2a500233eecf",
+      "word_count": 2314,
+      "has_concept_markers": true
+    },
+    "07-feel-expression-mapping": {
+      "content_hash": "a6f7a17ce5aaa2e4fe199c2503597f91696aba664956a8d7b15a4e069483f7ee",
+      "word_count": 2557,
+      "has_concept_markers": true
+    },
+    "08-validators-and-decomposers": {
+      "content_hash": "b3de1e06801b0b5e265fe4fde25b8dc464c2de02160e32c6a534602d99bb909c",
+      "word_count": 2402,
+      "has_concept_markers": true
+    },
+    "09-cli-interface": {
+      "content_hash": "895ee4fe5a6cb32e9c530cfb279ae2dee56845126c710f2f4dd946c81ebd3258",
+      "word_count": 2034,
+      "has_concept_markers": true
+    }
+  },
+  "learning_graph_state": {
+    "content_hash": "331b5ceaf54498631e4dd864a885c088f3e2406cd6e28ac5168ca67e62f2e14a",
+    "node_count": 70,
+    "edge_count": 110,
+    "enriched_nodes": 70,
+    "low_confidence_count": 35
+  },
+  "faq_state": null,
+  "refresh_history": []
+}

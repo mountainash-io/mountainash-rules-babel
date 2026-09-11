@@ -1,0 +1,10 @@
+{
+  "FOUND": "Foundation Concepts",
+  "PLUG": "Plugin Architecture",
+  "IMP": "Importers",
+  "EXP": "Exporters",
+  "VALID": "Validators",
+  "DECOMP": "Decomposers",
+  "CLI": "CLI Interface",
+  "ERROR": "Error Handling"
+}

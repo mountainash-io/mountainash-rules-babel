@@ -1,0 +1,54 @@
+{
+  "id": "mountainash_rules_babel.cli.main",
+  "path": "src/mountainash_rules_babel/cli/main.py",
+  "summary": "Typer CLI application. Provides export, import, validate, and formats subcommands. Entry point registered as 'babel' console script.",
+  "role": "integration",
+  "visibility": "public",
+  "stability": "evolving",
+  "audiences": ["users", "maintainers"],
+  "doc_priority": "essential",
+  "confidence": "high",
+  "public_api": [
+    "app — Typer application instance",
+    "formats() — list available import/export formats",
+    "export_cmd(format, input, output, dim) — export lattice to target format",
+    "import_cmd(input, format?, dim) — import file and show stats",
+    "validate_cmd(input, checks?, dim) — run validation checks"
+  ],
+  "key_classes": [],
+  "key_functions": ["formats", "export_cmd", "import_cmd", "validate_cmd"],
+  "dependencies": [
+    "mountainash_rules_babel.__init__",
+    "mountainash_rules_babel.registry",
+    "typer"
+  ],
+  "dependents": [],
+  "extension_points": [],
+  "lifecycle_notes": [
+    "Entry point: babel = mountainash_rules_babel.cli.main:app"
+  ],
+  "documentation_hooks": [
+    "CLI usage section in user docs",
+    "Man page or --help reference"
+  ],
+  "examples": [
+    "docs/quickstart.md — CLI examples for export, import, formats"
+  ],
+  "tests": [
+    "tests/test_cli.py"
+  ],
+  "risks": [],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "config", "path": "pyproject.toml", "detail": "babel = mountainash_rules_babel.cli.main:app"},
+    {"kind": "doc", "path": "docs/quickstart.md", "detail": "CLI section with usage examples"},
+    {"kind": "test", "path": "tests/test_cli.py", "detail": "Tests CLI commands"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

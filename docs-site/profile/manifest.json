@@ -1,0 +1,62 @@
+{
+  "profile_version": "1.0",
+  "generated_at": "2026-06-02T00:00:00Z",
+  "source": {
+    "root": "../../../mountainash-rules-babel",
+    "git": {
+      "previous_hash": null,
+      "current_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+      "branch": "develop",
+      "working_tree_dirty": true
+    }
+  },
+  "scope": {
+    "include": ["src/mountainash_rules_babel/**/*.py"],
+    "exclude": ["**/__pycache__/**", "**/*.egg-info/**", ".venv/**"],
+    "package_roots": ["src/mountainash_rules_babel"]
+  },
+  "audiences": ["users", "maintainers", "backend-architecture", "broader-hype"],
+  "counts": {
+    "modules_discovered": 14,
+    "modules_profiled": 14,
+    "profiles_ignored": 0,
+    "facets_written": 4
+  },
+  "changed_scopes": {
+    "files": [],
+    "modules": [],
+    "facets": []
+  },
+  "ignored_paths": [
+    {
+      "path": "src/mountainash_rules_babel/__version__.py",
+      "reason": "Single-line version constant; no API surface"
+    }
+  ],
+  "profile_files": {
+    "modules": {
+      "init": "modules/init.json",
+      "errors": "modules/errors.json",
+      "registry": "modules/registry.json",
+      "xml_security": "modules/xml_security.json",
+      "cli.main": "modules/cli.main.json",
+      "decomposers.base": "modules/decomposers.base.json",
+      "exporters.base": "modules/exporters.base.json",
+      "exporters.csv_": "modules/exporters.csv_.json",
+      "exporters.dmn": "modules/exporters.dmn.json",
+      "importers.base": "modules/importers.base.json",
+      "importers.csv_": "modules/importers.csv_.json",
+      "validators.base": "modules/validators.base.json",
+      "validators.conflicts": "modules/validators.conflicts.json",
+      "validators.coverage": "modules/validators.coverage.json",
+      "validators.orphans": "modules/validators.orphans.json",
+      "validators.round_trip": "modules/validators.round_trip.json"
+    },
+    "facets": {
+      "users": "facets/users.json",
+      "maintainers": "facets/maintainers.json",
+      "backend-architecture": "facets/backend-architecture.json",
+      "broader-hype": "facets/broader-hype.json"
+    }
+  }
+}

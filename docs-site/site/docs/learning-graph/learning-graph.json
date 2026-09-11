@@ -1,0 +1,1152 @@
+{
+  "metadata": {
+    "title": "Mountainash Rules Babel Concept Graph",
+    "description": "A concept dependency graph for the mountainash-rules-babel format translation engine. 70 concepts across 8 categories covering plugin architecture, importers, exporters (DMN/CSV), validators, decomposers, CLI, and error handling.",
+    "creator": "Nathaniel Ramm",
+    "date": "2026-06-03",
+    "version": "1.0",
+    "format": "Learning Graph JSON v1.0",
+    "schema": "https://raw.githubusercontent.com/dmccreary/learning-graphs/refs/heads/main/src/schema/learning-graph-schema.json",
+    "license": "CC BY-NC-SA 4.0 DEED",
+    "source_commit": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+    "profile_dir": "03.profile/mountainash-rules-babel"
+  },
+  "groups": {
+    "FOUND": {
+      "classifierName": "Foundation Concepts",
+      "color": "SteelBlue",
+      "font": {
+        "color": "white"
+      }
+    },
+    "PLUG": {
+      "classifierName": "Plugin Architecture",
+      "color": "DarkSlateBlue",
+      "font": {
+        "color": "white"
+      }
+    },
+    "IMP": {
+      "classifierName": "Importers",
+      "color": "DarkGreen",
+      "font": {
+        "color": "white"
+      }
+    },
+    "EXP": {
+      "classifierName": "Exporters",
+      "color": "Crimson",
+      "font": {
+        "color": "white"
+      }
+    },
+    "VALID": {
+      "classifierName": "Validators",
+      "color": "Gold",
+      "font": {
+        "color": "black"
+      }
+    },
+    "DECOMP": {
+      "classifierName": "Decomposers",
+      "color": "Teal",
+      "font": {
+        "color": "white"
+      }
+    },
+    "CLI": {
+      "classifierName": "CLI Interface",
+      "color": "MediumPurple",
+      "font": {
+        "color": "white"
+      }
+    },
+    "ERROR": {
+      "classifierName": "Error Handling",
+      "color": "Orange",
+      "font": {
+        "color": "black"
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": 1,
+      "label": "Decision Tables",
+      "group": "FOUND",
+      "shape": "box",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "01-foundations",
+      "match_confidence": 0.0
+    },
+    {
+      "id": 2,
+      "label": "Business Rules",
+      "group": "FOUND",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "01-foundations",
+      "match_confidence": 0.0
+    },
+    {
+      "id": 3,
+      "label": "CSV Format",
+      "group": "FOUND",
+      "shape": "box",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "01-foundations",
+      "match_confidence": 0.0
+    },
+    {
+      "id": 4,
+      "label": "XML Format",
+      "group": "FOUND",
+      "shape": "box",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "01-foundations",
+      "match_confidence": 0.0
+    },
+    {
+      "id": 5,
+      "label": "DMN Standard",
+      "group": "FOUND",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "01-foundations",
+      "match_confidence": 0.0
+    },
+    {
+      "id": 6,
+      "label": "FEEL Language",
+      "group": "FOUND",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "01-foundations",
+      "match_confidence": 0.0
+    },
+    {
+      "id": 7,
+      "label": "Python Protocols",
+      "group": "FOUND",
+      "shape": "box",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "02-python-plugin-infrastructure",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 8,
+      "label": "Runtime Checkable Protocol",
+      "group": "FOUND",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "02-python-plugin-infrastructure",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 9,
+      "label": "Entry Points Mechanism",
+      "group": "FOUND",
+      "shape": "box",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "02-python-plugin-infrastructure",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 10,
+      "label": "Lattice Object",
+      "group": "FOUND",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "01-foundations",
+      "match_confidence": 0.0
+    },
+    {
+      "id": 11,
+      "label": "PluginRegistry Class",
+      "group": "PLUG",
+      "source_module": "registry",
+      "source_path": "src/mountainash_rules_babel/registry.py",
+      "chapter": "02-python-plugin-infrastructure",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 12,
+      "label": "Auto Discovery",
+      "group": "PLUG",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "02-python-plugin-infrastructure",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 13,
+      "label": "Entry Point Groups",
+      "group": "PLUG",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "02-python-plugin-infrastructure",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 14,
+      "label": "Exporter Entry Points",
+      "group": "PLUG",
+      "source_module": "exporters.base",
+      "source_path": "src/mountainash_rules_babel/exporters/base.py",
+      "chapter": "03-plugin-extension-points",
+      "match_confidence": 0.7
+    },
+    {
+      "id": 15,
+      "label": "Importer Entry Points",
+      "group": "PLUG",
+      "source_module": "importers.base",
+      "source_path": "src/mountainash_rules_babel/importers/base.py",
+      "chapter": "03-plugin-extension-points",
+      "match_confidence": 0.7
+    },
+    {
+      "id": 16,
+      "label": "Decomposer Entry Points",
+      "group": "PLUG",
+      "source_module": "decomposers.base",
+      "source_path": "src/mountainash_rules_babel/decomposers/base.py",
+      "chapter": "03-plugin-extension-points",
+      "match_confidence": 0.7
+    },
+    {
+      "id": 17,
+      "label": "Validator Entry Points",
+      "group": "PLUG",
+      "source_module": "validators.base",
+      "source_path": "src/mountainash_rules_babel/validators/base.py",
+      "chapter": "03-plugin-extension-points",
+      "match_confidence": 0.7
+    },
+    {
+      "id": 18,
+      "label": "Importer Protocol",
+      "group": "IMP",
+      "source_module": "importers.base",
+      "source_path": "src/mountainash_rules_babel/importers/base.py",
+      "chapter": "04-importers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 19,
+      "label": "Import Name Attribute",
+      "group": "IMP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "04-importers",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 20,
+      "label": "File Extensions Attribute",
+      "group": "IMP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "04-importers",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 21,
+      "label": "Import Lattice Method",
+      "group": "IMP",
+      "source_module": "init",
+      "source_path": "src/mountainash_rules_babel/__init__.py",
+      "chapter": "04-importers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 22,
+      "label": "CsvImporter Class",
+      "group": "IMP",
+      "source_module": "importers.csv_",
+      "source_path": "src/mountainash_rules_babel/importers/csv_.py",
+      "chapter": "04-importers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 23,
+      "label": "Dimension Column Inference",
+      "group": "IMP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "04-importers",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 24,
+      "label": "Data Type Detection",
+      "group": "IMP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "04-importers",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 25,
+      "label": "Polars CSV Read",
+      "group": "IMP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "04-importers",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 26,
+      "label": "Exporter Protocol",
+      "group": "EXP",
+      "source_module": "exporters.base",
+      "source_path": "src/mountainash_rules_babel/exporters/base.py",
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 27,
+      "label": "Export Name Attribute",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 28,
+      "label": "File Extension Attribute",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 29,
+      "label": "Export Method",
+      "group": "EXP",
+      "source_module": "cli.main",
+      "source_path": "src/mountainash_rules_babel/cli/main.py",
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.61
+    },
+    {
+      "id": 30,
+      "label": "Export Bytes Method",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 31,
+      "label": "CsvExporter Class",
+      "group": "EXP",
+      "source_module": "exporters.csv_",
+      "source_path": "src/mountainash_rules_babel/exporters/csv_.py",
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 32,
+      "label": "Polars DataFrame Conversion",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 33,
+      "label": "DmnExporter Class",
+      "group": "EXP",
+      "source_module": "exporters.dmn",
+      "source_path": "src/mountainash_rules_babel/exporters/dmn.py",
+      "chapter": "05-exporter-architecture",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 34,
+      "label": "DMN XML Tree Construction",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 35,
+      "label": "DMN Definitions Element",
+      "group": "EXP",
+      "source_module": "init",
+      "source_path": "src/mountainash_rules_babel/__init__.py",
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.6
+    },
+    {
+      "id": 36,
+      "label": "DMN Decision Element",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 37,
+      "label": "DMN DecisionTable Element",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 38,
+      "label": "DMN Input Elements",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 39,
+      "label": "DMN Output Elements",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 40,
+      "label": "DMN Rule Elements",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 41,
+      "label": "FEEL Expression Mapping",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 42,
+      "label": "FEEL Exact Match",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 43,
+      "label": "FEEL Not Equal",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 44,
+      "label": "FEEL Range Expression",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 45,
+      "label": "FEEL Greater Than",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 46,
+      "label": "FEEL Less Than",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 47,
+      "label": "FEEL Prefix Match",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 48,
+      "label": "FEEL Suffix Match",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 49,
+      "label": "FEEL Contains Match",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 50,
+      "label": "FEEL Set Membership",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 51,
+      "label": "FEEL Set Exclusion",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 52,
+      "label": "NA Sentinel Handling",
+      "group": "EXP",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "07-feel-expression-mapping",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 53,
+      "label": "XML Security Module",
+      "group": "EXP",
+      "source_module": "xml_security",
+      "source_path": "src/mountainash_rules_babel/xml_security.py",
+      "chapter": "06-dmn-xml-construction",
+      "match_confidence": 0.6
+    },
+    {
+      "id": 54,
+      "label": "Validator Protocol",
+      "group": "VALID",
+      "source_module": "validators.base",
+      "source_path": "src/mountainash_rules_babel/validators/base.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 55,
+      "label": "ValidationIssue Dataclass",
+      "group": "VALID",
+      "source_module": "validators.base",
+      "source_path": "src/mountainash_rules_babel/validators/base.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 56,
+      "label": "ValidationReport Dataclass",
+      "group": "VALID",
+      "source_module": "validators.base",
+      "source_path": "src/mountainash_rules_babel/validators/base.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 57,
+      "label": "ConflictsValidator",
+      "group": "VALID",
+      "source_module": "validators.conflicts",
+      "source_path": "src/mountainash_rules_babel/validators/conflicts.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 1.0
+    },
+    {
+      "id": 58,
+      "label": "CoverageValidator",
+      "group": "VALID",
+      "source_module": "validators.coverage",
+      "source_path": "src/mountainash_rules_babel/validators/coverage.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 1.0
+    },
+    {
+      "id": 59,
+      "label": "OrphansValidator",
+      "group": "VALID",
+      "source_module": "validators.orphans",
+      "source_path": "src/mountainash_rules_babel/validators/orphans.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 1.0
+    },
+    {
+      "id": 60,
+      "label": "RoundTripValidator",
+      "group": "VALID",
+      "source_module": "validators.round_trip",
+      "source_path": "src/mountainash_rules_babel/validators/round_trip.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 1.0
+    },
+    {
+      "id": 61,
+      "label": "Decomposer Protocol",
+      "group": "DECOMP",
+      "source_module": "decomposers.base",
+      "source_path": "src/mountainash_rules_babel/decomposers/base.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 62,
+      "label": "Fragment Dataclass",
+      "group": "DECOMP",
+      "source_module": "decomposers.base",
+      "source_path": "src/mountainash_rules_babel/decomposers/base.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 63,
+      "label": "DecompositionResult Dataclass",
+      "group": "DECOMP",
+      "source_module": "decomposers.base",
+      "source_path": "src/mountainash_rules_babel/decomposers/base.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 0.85
+    },
+    {
+      "id": 64,
+      "label": "Typer CLI App",
+      "group": "CLI",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "09-cli-interface",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 65,
+      "label": "Babel Export Command",
+      "group": "CLI",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "09-cli-interface",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 66,
+      "label": "Babel Import Command",
+      "group": "CLI",
+      "source_module": null,
+      "source_path": null,
+      "chapter": "09-cli-interface",
+      "match_confidence": 0.3
+    },
+    {
+      "id": 67,
+      "label": "Babel Validate Command",
+      "group": "CLI",
+      "source_module": "init",
+      "source_path": "src/mountainash_rules_babel/__init__.py",
+      "chapter": "09-cli-interface",
+      "match_confidence": 0.7
+    },
+    {
+      "id": 68,
+      "label": "BabelError Base",
+      "group": "ERROR",
+      "shape": "box",
+      "source_module": "errors",
+      "source_path": "src/mountainash_rules_babel/errors.py",
+      "chapter": "03-plugin-extension-points",
+      "match_confidence": 0.7
+    },
+    {
+      "id": 69,
+      "label": "FormatNotFoundError",
+      "group": "ERROR",
+      "source_module": "errors",
+      "source_path": "src/mountainash_rules_babel/errors.py",
+      "chapter": "03-plugin-extension-points",
+      "match_confidence": 1.0
+    },
+    {
+      "id": 70,
+      "label": "ValidationError Class",
+      "group": "ERROR",
+      "source_module": "errors",
+      "source_path": "src/mountainash_rules_babel/errors.py",
+      "chapter": "08-validators-and-decomposers",
+      "match_confidence": 0.85
+    }
+  ],
+  "edges": [
+    {
+      "from": 2,
+      "to": 1
+    },
+    {
+      "from": 5,
+      "to": 1
+    },
+    {
+      "from": 5,
+      "to": 4
+    },
+    {
+      "from": 6,
+      "to": 5
+    },
+    {
+      "from": 8,
+      "to": 7
+    },
+    {
+      "from": 10,
+      "to": 1
+    },
+    {
+      "from": 10,
+      "to": 2
+    },
+    {
+      "from": 11,
+      "to": 8
+    },
+    {
+      "from": 11,
+      "to": 9
+    },
+    {
+      "from": 12,
+      "to": 11
+    },
+    {
+      "from": 12,
+      "to": 9
+    },
+    {
+      "from": 13,
+      "to": 12
+    },
+    {
+      "from": 13,
+      "to": 9
+    },
+    {
+      "from": 14,
+      "to": 13
+    },
+    {
+      "from": 15,
+      "to": 13
+    },
+    {
+      "from": 16,
+      "to": 13
+    },
+    {
+      "from": 17,
+      "to": 13
+    },
+    {
+      "from": 18,
+      "to": 8
+    },
+    {
+      "from": 19,
+      "to": 18
+    },
+    {
+      "from": 20,
+      "to": 18
+    },
+    {
+      "from": 21,
+      "to": 18
+    },
+    {
+      "from": 21,
+      "to": 10
+    },
+    {
+      "from": 22,
+      "to": 18
+    },
+    {
+      "from": 22,
+      "to": 3
+    },
+    {
+      "from": 22,
+      "to": 15
+    },
+    {
+      "from": 23,
+      "to": 22
+    },
+    {
+      "from": 23,
+      "to": 10
+    },
+    {
+      "from": 24,
+      "to": 22
+    },
+    {
+      "from": 24,
+      "to": 23
+    },
+    {
+      "from": 25,
+      "to": 22
+    },
+    {
+      "from": 25,
+      "to": 3
+    },
+    {
+      "from": 26,
+      "to": 8
+    },
+    {
+      "from": 27,
+      "to": 26
+    },
+    {
+      "from": 28,
+      "to": 26
+    },
+    {
+      "from": 29,
+      "to": 26
+    },
+    {
+      "from": 29,
+      "to": 10
+    },
+    {
+      "from": 30,
+      "to": 26
+    },
+    {
+      "from": 30,
+      "to": 10
+    },
+    {
+      "from": 31,
+      "to": 26
+    },
+    {
+      "from": 31,
+      "to": 3
+    },
+    {
+      "from": 31,
+      "to": 14
+    },
+    {
+      "from": 32,
+      "to": 31
+    },
+    {
+      "from": 32,
+      "to": 10
+    },
+    {
+      "from": 33,
+      "to": 26
+    },
+    {
+      "from": 33,
+      "to": 5
+    },
+    {
+      "from": 33,
+      "to": 14
+    },
+    {
+      "from": 34,
+      "to": 33
+    },
+    {
+      "from": 34,
+      "to": 4
+    },
+    {
+      "from": 35,
+      "to": 34
+    },
+    {
+      "from": 36,
+      "to": 35
+    },
+    {
+      "from": 37,
+      "to": 36
+    },
+    {
+      "from": 38,
+      "to": 37
+    },
+    {
+      "from": 38,
+      "to": 10
+    },
+    {
+      "from": 39,
+      "to": 37
+    },
+    {
+      "from": 40,
+      "to": 37
+    },
+    {
+      "from": 40,
+      "to": 38
+    },
+    {
+      "from": 40,
+      "to": 39
+    },
+    {
+      "from": 41,
+      "to": 6
+    },
+    {
+      "from": 41,
+      "to": 33
+    },
+    {
+      "from": 41,
+      "to": 10
+    },
+    {
+      "from": 42,
+      "to": 41
+    },
+    {
+      "from": 43,
+      "to": 41
+    },
+    {
+      "from": 44,
+      "to": 41
+    },
+    {
+      "from": 45,
+      "to": 41
+    },
+    {
+      "from": 46,
+      "to": 41
+    },
+    {
+      "from": 47,
+      "to": 41
+    },
+    {
+      "from": 48,
+      "to": 41
+    },
+    {
+      "from": 49,
+      "to": 41
+    },
+    {
+      "from": 50,
+      "to": 41
+    },
+    {
+      "from": 51,
+      "to": 41
+    },
+    {
+      "from": 52,
+      "to": 41
+    },
+    {
+      "from": 52,
+      "to": 33
+    },
+    {
+      "from": 53,
+      "to": 4
+    },
+    {
+      "from": 53,
+      "to": 34
+    },
+    {
+      "from": 54,
+      "to": 8
+    },
+    {
+      "from": 55,
+      "to": 54
+    },
+    {
+      "from": 56,
+      "to": 55
+    },
+    {
+      "from": 57,
+      "to": 54
+    },
+    {
+      "from": 57,
+      "to": 56
+    },
+    {
+      "from": 57,
+      "to": 17
+    },
+    {
+      "from": 58,
+      "to": 54
+    },
+    {
+      "from": 58,
+      "to": 56
+    },
+    {
+      "from": 58,
+      "to": 17
+    },
+    {
+      "from": 59,
+      "to": 54
+    },
+    {
+      "from": 59,
+      "to": 56
+    },
+    {
+      "from": 59,
+      "to": 17
+    },
+    {
+      "from": 60,
+      "to": 54
+    },
+    {
+      "from": 60,
+      "to": 56
+    },
+    {
+      "from": 60,
+      "to": 17
+    },
+    {
+      "from": 61,
+      "to": 8
+    },
+    {
+      "from": 62,
+      "to": 61
+    },
+    {
+      "from": 62,
+      "to": 10
+    },
+    {
+      "from": 63,
+      "to": 62
+    },
+    {
+      "from": 63,
+      "to": 56
+    },
+    {
+      "from": 64,
+      "to": 11
+    },
+    {
+      "from": 65,
+      "to": 64
+    },
+    {
+      "from": 65,
+      "to": 29
+    },
+    {
+      "from": 65,
+      "to": 22
+    },
+    {
+      "from": 66,
+      "to": 64
+    },
+    {
+      "from": 66,
+      "to": 22
+    },
+    {
+      "from": 67,
+      "to": 64
+    },
+    {
+      "from": 67,
+      "to": 56
+    },
+    {
+      "from": 67,
+      "to": 57
+    },
+    {
+      "from": 67,
+      "to": 58
+    },
+    {
+      "from": 67,
+      "to": 59
+    },
+    {
+      "from": 67,
+      "to": 60
+    },
+    {
+      "from": 69,
+      "to": 68
+    },
+    {
+      "from": 69,
+      "to": 11
+    },
+    {
+      "from": 70,
+      "to": 68
+    },
+    {
+      "from": 70,
+      "to": 56
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "mountainash_rules_babel.validators.coverage",
+  "path": "src/mountainash_rules_babel/validators/coverage.py",
+  "summary": "Coverage validator stub. Always returns is_valid=False with a not_implemented warning. Intended to detect coverage gaps in a Lattice. Has a known import bug (BUG-001).",
+  "role": "backend",
+  "visibility": "internal",
+  "stability": "experimental",
+  "audiences": ["maintainers"],
+  "doc_priority": "internal-note",
+  "confidence": "high",
+  "public_api": [
+    "CoverageValidator.name = 'coverage'",
+    "CoverageValidator.validate(lattice, **options) -> ValidationReport"
+  ],
+  "key_classes": ["CoverageValidator"],
+  "key_functions": [],
+  "dependencies": [
+    "mountainash_utils_rules.lattice (BUG: should be mountainash_rules.lattice)",
+    "mountainash_rules_babel.validators.base"
+  ],
+  "dependents": [],
+  "extension_points": [],
+  "lifecycle_notes": [
+    "Stub — always returns not_implemented",
+    "BUG-001: imports from mountainash_utils_rules.lattice instead of mountainash_rules.lattice — will fail to load silently",
+    "Registered via entry point: mountainash_babel.validators: coverage"
+  ],
+  "documentation_hooks": [],
+  "examples": [],
+  "tests": [
+    "tests/test_validators.py"
+  ],
+  "risks": [
+    "Wrong import path causes silent load failure — validator disappears from registry",
+    "Contributes to validate() always failing when run without explicit checks list"
+  ],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/validators/coverage.py", "detail": "Stub with wrong import: mountainash_utils_rules.lattice"},
+    {"kind": "config", "path": "pyproject.toml", "detail": "coverage = mountainash_rules_babel.validators.coverage:CoverageValidator"},
+    {"kind": "doc", "path": "docs/backlog.md", "detail": "BUG-001 documents the wrong import path"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

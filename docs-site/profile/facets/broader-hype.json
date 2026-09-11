@@ -1,0 +1,54 @@
+{
+  "audience": "broader-hype",
+  "summary": "The format bridge for decision management — translate rule definitions between formats, export as standards-compliant DMN for regulatory review, and bridge Python-native rule engines with the enterprise decision management world.",
+
+  "the_vision": "Business rules cross boundaries. They're authored by analysts in spreadsheets, evaluated by Python engines in pipelines, reviewed by auditors in standards-compliant formats, and consumed by Java-based systems in production. mountainash-rules-babel is the bridge: import from CSV, export as OMG DMN 1.3 with auto-generated FEEL expressions, and extend to any format through a plugin architecture.",
+
+  "what_it_makes_possible": [
+    {
+      "capability": "Rules that speak standards",
+      "essence": "Export a rule set as DMN 1.3 — the decision table format that regulated industries already know how to read. Match strategies map to FEEL expressions automatically. Auditors, compliance teams, and Java-based decision engines get a format they understand without the rule authors leaving Python."
+    },
+    {
+      "capability": "Format translation as a two-line operation",
+      "essence": "Import a rule table from CSV. Export it as DMN, JDM, Drools, or flagd. The rule definitions — dimensions, match strategies, aggregates — travel between formats without manual mapping. The lattice structure preserves all rule semantics across the translation."
+    },
+    {
+      "capability": "CI/CD-ready rule publishing",
+      "essence": "A CLI that fits into any build pipeline: export rules as DMN on every commit, validate rule tables before deployment, decompose complex rules for review. Rule governance becomes part of the development workflow, not a manual handoff."
+    },
+    {
+      "capability": "A plugin architecture for new formats",
+      "essence": "Exporter, Importer, Decomposer, and Validator protocols — each independently implementable. Entry point groups for plugin discovery. Adding a new format means implementing a protocol and registering an entry point. The format ecosystem grows without modifying the core."
+    }
+  ],
+
+  "use_cases": [
+    {
+      "title": "The regulatory rule handoff",
+      "story": "A pricing team defines rules in Python with mountainash-rules. Regulatory review requires DMN. rules-babel exports the same rule set as DMN 1.3 with auto-generated FEEL expressions. The auditor reviews a standards-compliant document. The Python evaluation and the DMN export come from the same source of truth."
+    },
+    {
+      "title": "The cross-platform rule library",
+      "story": "An organisation uses Python for analytics and Java for transaction processing. Business rules need to run in both. The rules are authored in mountainash-rules, evaluated in Python pipelines, and exported as DMN for the Java-based decision engine. One rule definition, two execution environments, standards-compliant interchange."
+    },
+    {
+      "title": "The feature flag governance pipeline",
+      "story": "Feature flags grow complex — percentage rollouts interacting with plan restrictions, regional overrides, beta populations. The rules live as tabular data in mountainash-rules. rules-babel exports to flagd format for the feature flag service. The CI pipeline validates rule consistency on every commit and exports the latest definitions automatically."
+    }
+  ],
+
+  "featured_modules": [
+    "mountainash_rules_babel.__init__",
+    "mountainash_rules_babel.exporters.dmn",
+    "mountainash_rules_babel.registry",
+    "mountainash_rules_babel.cli.main"
+  ],
+  "hidden_or_internal_modules": [
+    "mountainash_rules_babel.xml_security",
+    "mountainash_rules_babel.exporters.csv_",
+    "mountainash_rules_babel.importers.csv_",
+    "mountainash_rules_babel.errors"
+  ],
+  "open_questions": []
+}

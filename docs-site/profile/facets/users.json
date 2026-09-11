@@ -1,0 +1,63 @@
+{
+  "audience": "users",
+  "summary": "mountainash-rules-babel bridges decision table formats, letting you import rules from CSV and export them as OMG DMN 1.3 with auto-generated FEEL expressions. The core workflow is import_lattice followed by export_lattice, with a format registry that makes it easy to discover available importers, exporters, and validators. A CLI is included for CI/CD integration.",
+  "use_cases": [
+    "Import a pricing decision table from a CSV maintained by business analysts and export it as a standards-compliant DMN file for a BPM platform.",
+    "Integrate format conversion into a CI/CD pipeline using the CLI to validate and export decision tables on every commit.",
+    "Discover available formats and validators programmatically via the registry to build adaptive tooling.",
+    "Validate decision tables for structural correctness before deploying them to production."
+  ],
+  "concepts": [
+    {
+      "name": "Import/Export Workflow",
+      "module_ids": ["mountainash_rules_babel.__init__"],
+      "description": "The primary workflow centres on two functions: import_lattice (read a file into a Lattice) and export_lattice (write a Lattice to a target format). Format selection happens automatically by file extension, or you can specify a format explicitly."
+    },
+    {
+      "name": "Format Registry",
+      "module_ids": ["mountainash_rules_babel.registry"],
+      "description": "The registry tracks all available importers, exporters, and validators. Use list_exporters(), list_importers(), and list_validators() to discover what formats are available in your installation. The registry supports automatic format inference from file extensions."
+    },
+    {
+      "name": "CSV Import",
+      "module_ids": ["mountainash_rules_babel.importers.csv_"],
+      "description": "The CSV importer reads tabular decision tables and converts them into Lattice objects. You can control which columns are treated as dimensions and which as aggregates using the dimension_columns and aggregate_columns options, or let the importer infer the structure automatically."
+    },
+    {
+      "name": "DMN Export",
+      "module_ids": ["mountainash_rules_babel.exporters.dmn"],
+      "description": "The DMN exporter produces OMG DMN 1.3 compliant XML with auto-generated FEEL expressions for all 11 match strategies. Customise the output with decision_name and table_name options to match your BPM platform's naming conventions."
+    },
+    {
+      "name": "CLI",
+      "module_ids": ["mountainash_rules_babel.cli.main"],
+      "description": "The command-line interface supports import, export, and validation operations, making it straightforward to integrate decision table management into shell scripts, Makefiles, and CI/CD pipelines."
+    },
+    {
+      "name": "Error Handling",
+      "module_ids": ["mountainash_rules_babel.errors"],
+      "description": "The package provides specific error types (FormatNotFoundError and others) for clean error handling in application code. Catch these to provide meaningful feedback when a requested format is unavailable or input is malformed."
+    },
+    {
+      "name": "Validation",
+      "module_ids": ["mountainash_rules_babel.validators.base"],
+      "description": "Validators check decision tables for structural issues such as conflicts, coverage gaps, and orphaned rules. The validation API aggregates findings across multiple validators and reports them with clear categories and descriptions."
+    }
+  ],
+  "featured_modules": [
+    "mountainash_rules_babel.__init__",
+    "mountainash_rules_babel.cli.main",
+    "mountainash_rules_babel.errors"
+  ],
+  "hidden_or_internal_modules": [
+    "mountainash_rules_babel.xml_security",
+    "mountainash_rules_babel.exporters.csv_",
+    "mountainash_rules_babel.exporters.dmn",
+    "mountainash_rules_babel.importers.csv_",
+    "mountainash_rules_babel.validators.conflicts",
+    "mountainash_rules_babel.validators.coverage",
+    "mountainash_rules_babel.validators.orphans",
+    "mountainash_rules_babel.validators.round_trip"
+  ],
+  "open_questions": []
+}
