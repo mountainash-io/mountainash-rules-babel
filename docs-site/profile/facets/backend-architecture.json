@@ -1,0 +1,61 @@
+{
+  "audience": "backend-architecture",
+  "summary": "mountainash-rules-babel uses a protocol-based plugin architecture with four extension axes: Exporter, Importer, Decomposer, and Validator. Plugins are discovered at runtime via importlib.metadata entry points and stored in a module-level singleton registry. Domain types (Lattice, Dimension, DimensionsMetadata, Aggregate, MatchStrategy) flow in from the mountainash-rules sibling package, and data moves through Polars DataFrames between the domain layer and format-specific serialisation.",
+  "concepts": [
+    {
+      "name": "Protocol Contracts",
+      "module_ids": [
+        "mountainash_rules_babel.exporters.base",
+        "mountainash_rules_babel.importers.base",
+        "mountainash_rules_babel.decomposers.base",
+        "mountainash_rules_babel.validators.base"
+      ],
+      "description": "Each extension axis is defined by a @runtime_checkable Protocol in its respective base module. This enables structural subtyping: any class that implements the required methods is a valid plugin, with no inheritance required. The four protocols (Exporter, Importer, Decomposer, Validator) provide clean, testable contracts for format conversion and quality checking."
+    },
+    {
+      "name": "Entry Point Discovery",
+      "module_ids": ["mountainash_rules_babel.registry"],
+      "description": "The registry discovers plugins via importlib.metadata entry point groups defined in pyproject.toml. This allows third-party packages to register new formats by declaring entry points, and the registry will pick them up automatically at import time."
+    },
+    {
+      "name": "Data Flow: Lattice to Polars to Format",
+      "module_ids": [
+        "mountainash_rules_babel.exporters.csv_",
+        "mountainash_rules_babel.exporters.dmn",
+        "mountainash_rules_babel.importers.csv_"
+      ],
+      "description": "All format conversions route through Polars DataFrames as the intermediate representation. Exporters extract the combinations DataFrame from a Lattice, transform it into the target format's structure, and serialise. Importers parse the source format into a DataFrame, then construct a Lattice. This consistent data flow makes it straightforward to add new formats."
+    },
+    {
+      "name": "FEEL Expression Generation",
+      "module_ids": ["mountainash_rules_babel.exporters.dmn"],
+      "description": "The DMN exporter generates FEEL (Friendly Enough Expression Language) entries for each rule cell via the _feel_entry function, which branches across all 11 MatchStrategy variants. This mapping ensures that exported DMN files contain semantically correct, executable FEEL expressions that faithfully represent the original rule logic."
+    },
+    {
+      "name": "Decomposition Model",
+      "module_ids": ["mountainash_rules_babel.decomposers.base"],
+      "description": "The decomposition axis supports breaking large decision tables into smaller, focused fragments. The Fragment and DecompositionResult dataclasses model this structure, enabling strategies like splitting by dimension range or rule category for more manageable analysis and export."
+    },
+    {
+      "name": "Validation Aggregation",
+      "module_ids": [
+        "mountainash_rules_babel.__init__",
+        "mountainash_rules_babel.validators.base"
+      ],
+      "description": "The validation pipeline runs all registered validators against a decision table and aggregates their findings into a unified report. Each finding carries a category (including a 'not_implemented' category for stub validators), enabling callers to filter and prioritise issues appropriately."
+    }
+  ],
+  "featured_modules": [
+    "mountainash_rules_babel.registry",
+    "mountainash_rules_babel.exporters.base",
+    "mountainash_rules_babel.importers.base",
+    "mountainash_rules_babel.decomposers.base",
+    "mountainash_rules_babel.validators.base",
+    "mountainash_rules_babel.exporters.dmn"
+  ],
+  "hidden_or_internal_modules": [
+    "mountainash_rules_babel.cli.main",
+    "mountainash_rules_babel.errors"
+  ],
+  "open_questions": []
+}

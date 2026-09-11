@@ -1,0 +1,56 @@
+{
+  "id": "mountainash_rules_babel.decomposers.base",
+  "path": "src/mountainash_rules_babel/decomposers/base.py",
+  "summary": "Decomposer protocol and data models. Defines Fragment and DecompositionResult dataclasses, and the Decomposer runtime-checkable protocol for lattice decomposition plugins.",
+  "role": "protocol",
+  "visibility": "semi-public",
+  "stability": "evolving",
+  "audiences": ["extension-authors", "maintainers", "backend-architecture"],
+  "doc_priority": "useful",
+  "confidence": "high",
+  "public_api": [
+    "Fragment(name, dataframe, dimensions, metadata, aggregates, source_rows?)",
+    "DecompositionResult(fragments, metadata, aggregates, original_row_count, fragment_count, dimension_groups, validation?)",
+    "Decomposer(Protocol) — name: str, decompose(lattice, **options) -> DecompositionResult"
+  ],
+  "key_classes": ["Fragment", "DecompositionResult", "Decomposer"],
+  "key_functions": [],
+  "dependencies": [
+    "mountainash_rules.aggregate",
+    "mountainash_rules.dimension",
+    "mountainash_rules.lattice",
+    "mountainash_rules_babel.validators.base"
+  ],
+  "dependents": [
+    "mountainash_rules_babel.__init__",
+    "mountainash_rules_babel.registry"
+  ],
+  "extension_points": [
+    "Decomposer protocol — implement to create new decomposition strategies"
+  ],
+  "lifecycle_notes": [
+    "No built-in decomposer implementations shipped; requires external plugins (e.g. hyfd)"
+  ],
+  "documentation_hooks": [
+    "Extension author guide — how to implement a Decomposer",
+    "Architecture guide — decomposition data flow"
+  ],
+  "examples": [],
+  "tests": [
+    "tests/test_protocols.py"
+  ],
+  "risks": [],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "symbol", "path": "src/mountainash_rules_babel/decomposers/base.py", "detail": "Fragment, DecompositionResult, Decomposer protocol"},
+    {"kind": "config", "path": "pyproject.toml", "detail": "mountainash_babel.decomposers entry point group (empty)"},
+    {"kind": "test", "path": "tests/test_protocols.py", "detail": "Tests protocol conformance"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}

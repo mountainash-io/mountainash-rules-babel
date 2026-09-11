@@ -1,0 +1,10 @@
+{
+  "title": "Mountainash Rules Babel Concept Graph",
+  "description": "A concept dependency graph for the mountainash-rules-babel format translation engine. 70 concepts across 8 categories covering plugin architecture, importers, exporters (DMN/CSV), validators, decomposers, CLI, and error handling.",
+  "creator": "Nathaniel Ramm",
+  "date": "2026-06-03",
+  "version": "1.0",
+  "format": "Learning Graph JSON v1.0",
+  "schema": "https://raw.githubusercontent.com/dmccreary/learning-graphs/refs/heads/main/src/schema/learning-graph-schema.json",
+  "license": "CC BY-NC-SA 4.0 DEED"
+}

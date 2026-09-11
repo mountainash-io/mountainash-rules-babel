@@ -1,0 +1,58 @@
+{
+  "id": "mountainash_rules_babel.importers.csv_",
+  "path": "src/mountainash_rules_babel/importers/csv_.py",
+  "summary": "CSV importer backend. Reads CSV via Polars, infers dimension columns (everything except rule_name and aggregate columns), maps Polars dtypes to Python types, and constructs a Lattice with DimensionsMetadata. All dimensions default to EXACT match strategy.",
+  "role": "backend",
+  "visibility": "internal",
+  "stability": "stable",
+  "audiences": ["maintainers", "backend-architecture"],
+  "doc_priority": "reference-only",
+  "confidence": "high",
+  "public_api": [
+    "CsvImporter.name = 'csv'",
+    "CsvImporter.file_extensions = ['.csv']",
+    "CsvImporter.import_lattice(path, dimension_columns?, aggregate_columns?, **options) -> Lattice"
+  ],
+  "key_classes": ["CsvImporter"],
+  "key_functions": [],
+  "dependencies": [
+    "polars",
+    "mountainash_rules.aggregate",
+    "mountainash_rules.constants.MatchStrategy",
+    "mountainash_rules.dimension",
+    "mountainash_rules.lattice"
+  ],
+  "dependents": [],
+  "extension_points": [],
+  "lifecycle_notes": [
+    "Registered via entry point: mountainash_babel.importers: csv",
+    "All imported dimensions use MatchStrategy.EXACT — fidelity lost for other strategies"
+  ],
+  "documentation_hooks": [
+    "Dimension inference logic docs",
+    "Limitation: all dimensions import as EXACT"
+  ],
+  "examples": [
+    "docs/quickstart.md — import_lattice with dimension_columns and aggregate_columns"
+  ],
+  "tests": [
+    "tests/test_csv_importer.py",
+    "tests/test_round_trip_csv.py"
+  ],
+  "risks": [
+    "Match strategy always set to EXACT — round-tripping through CSV loses RANGE/SET/PREFIX/etc. strategies"
+  ],
+  "open_questions": [],
+  "evidence": [
+    {"kind": "config", "path": "pyproject.toml", "detail": "csv = mountainash_rules_babel.importers.csv_:CsvImporter"},
+    {"kind": "test", "path": "tests/test_csv_importer.py", "detail": "Tests CSV import with various column configurations"},
+    {"kind": "test", "path": "tests/test_round_trip_csv.py", "detail": "Tests CSV round-trip preservation"}
+  ],
+  "source_hash": "431d4500a40bb509b6fa3fb78d2e7deae6d41cdb",
+  "manual": {
+    "notes": "",
+    "editorial_status": "",
+    "owner": "",
+    "manual_summary": ""
+  }
+}
