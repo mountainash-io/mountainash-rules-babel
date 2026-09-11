@@ -6,7 +6,7 @@ The graph maps 70 concepts covering the plugin architecture, importers (CSV), ex
 
 ## Files
 
-- [Course Description](./course-description.md)
+- [Course Description](../course-description.md)
 - [Concept List](./concept-list.md)
 - [Learning Graph CSV](./learning-graph.csv)
 - [Learning Graph JSON](./learning-graph.json)
