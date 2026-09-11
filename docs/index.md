@@ -4,7 +4,7 @@ description: 'An intelligent textbook for mountainash-rules-babel — a format t
 ---
 
 
-[← Back to Ecosystem](../)
+[← Back to Ecosystem](https://docs.mountainash.io/)
 # Mountainash Rules Babel
 
 An intelligent textbook for mountainash-rules-babel — a format translation engine for decision tables and DMN
