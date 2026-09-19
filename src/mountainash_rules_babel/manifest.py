@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import pathlib
+from typing import Literal
 
 import yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from mountainash_rules import DimensionsMetadata, Lattice
 
@@ -16,10 +17,11 @@ class AggregateSpec(BaseModel):
 
 
 class LatticeManifest(BaseModel):
-    """Everything needed to rehydrate an exported table: dimensions
-    (embedding the engine's DimensionsMetadata payload, hit_policy
-    included) plus aggregate declarations."""
+    """Flat CSV sidecar metadata for inspection-only lattice values."""
 
+    model_config = ConfigDict(extra="forbid")
+
+    fidelity: Literal["flat_values"] = "flat_values"
     dimensions: DimensionsMetadata
     aggregates: list[AggregateSpec] = Field(default_factory=list)
 
@@ -35,7 +37,7 @@ class LatticeManifest(BaseModel):
 
     def to_yaml(self) -> str:
         return yaml.safe_dump(
-            self.model_dump(mode="json", exclude_defaults=True),
+            self.model_dump(mode="json"),
             sort_keys=False,
         )
 

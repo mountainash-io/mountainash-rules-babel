@@ -7,7 +7,6 @@ from lxml import etree
 
 from mountainash_rules import DataType, Dimension, HitPolicy, Lattice, MatchStrategy
 
-from mountainash_rules_babel.errors import SchemaContractError
 from mountainash_rules_babel.exporters.base import resolve_lattice
 
 DMN_NS = "https://www.omg.org/spec/DMN/20191111/MODEL/"
@@ -44,7 +43,11 @@ def _feel_entry(value: t.Any, dim: Dimension) -> str:
     if isinstance(value, float) and value != value:  # NaN
         return ""
     # Numeric sentinel
-    if isinstance(value, (int, float)) and not isinstance(value, bool) and value == -999999999:
+    if (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and value == -999999999
+    ):
         return ""
     # String sentinel
     if isinstance(value, str) and value == "<NA>":
@@ -132,23 +135,13 @@ class DmnExporter:
     def export_bytes(
         self,
         lattice: Lattice,
-        *,
-        include_tracking: bool = False,
-        assume_unique: bool = False,
         **options,
     ) -> bytes:
         decision_name = options.get("decision_name", "GeneratedDecision")
         table_name = options.get("table_name", "GeneratedTable")
 
-        view = resolve_lattice(lattice, include_tracking=include_tracking)
+        view = resolve_lattice(lattice)
         policy = lattice.metadata.hit_policy
-        if view.is_composed and policy == HitPolicy.UNIQUE and not assume_unique:
-            raise SchemaContractError(
-                "hit_policy=unique is unproven for a composed lattice "
-                "(distinct maximal combinations can overlap); run a "
-                "conflicts analysis and pass assume_unique=True to override"
-            )
-
         df = view.df
         output_cols = view.output_columns
 
@@ -187,20 +180,10 @@ class DmnExporter:
             out.set("name", col)
 
         # Rules (one per row)
-        rows = df.to_dicts()
-        tracking_rows = (
-            view.tracking.to_dicts() if view.tracking is not None else None
-        )
-        for row_idx, row in enumerate(rows):
+        for row_idx, row in enumerate(df.to_dicts()):
             rule_el = etree.SubElement(dt, f"{{{DMN_NS}}}rule")
             rule_el.set("id", f"rule_{row_idx}")
-            if tracking_rows is not None:
-                desc = etree.SubElement(rule_el, f"{{{DMN_NS}}}description")
-                desc.text = (
-                    f"prime_product={tracking_rows[row_idx]['__prime_product']}"
-                )
 
-            # Input entries (view.df carries resolved flat names)
             for dim in lattice.metadata.dimensions:
                 ie = etree.SubElement(rule_el, f"{{{DMN_NS}}}inputEntry")
                 ie.set("id", f"ie_{row_idx}_{dim.dimension_name}")
@@ -212,7 +195,6 @@ class DmnExporter:
                     value = row.get(dim.resolved_rule_field)
                     text_el.text = _feel_entry(value, dim)
 
-            # Output entries
             for col in output_cols:
                 oe = etree.SubElement(rule_el, f"{{{DMN_NS}}}outputEntry")
                 oe.set("id", f"oe_{row_idx}_{col}")

@@ -91,3 +91,10 @@ def test_infer_importer_unknown_extension():
 def test_auto_discover_does_not_crash():
     reg = PluginRegistry(auto_discover=True)
     assert isinstance(reg.list_exporters(), list)
+
+
+def test_installed_entry_points_discover_native_plugins():
+    reg = PluginRegistry(auto_discover=True)
+
+    assert "native" in reg.list_exporters()
+    assert "native" in reg.list_importers()

@@ -6,7 +6,7 @@ import typing as t
 from pathlib import Path
 
 from mountainash_rules_babel.__version__ import __version__
-from mountainash_rules_babel.errors import FormatNotFoundError
+from mountainash_rules_babel.errors import FormatNotFoundError as FormatNotFoundError
 from mountainash_rules_babel.manifest import AggregateSpec, LatticeManifest
 from mountainash_rules_babel.registry import registry
 from mountainash_rules_babel.validators.base import ValidationIssue, ValidationReport
@@ -35,8 +35,11 @@ def export_lattice(
     if validate:
         from mountainash_rules_babel.errors import ValidationError
 
-        report = _run_validators(lattice, ["round_trip"])
-        if not report.is_valid and report.errors:
+        validation_options = {**options, "format": format}
+        if format == "native" and isinstance(result, Path):
+            validation_options["path"] = result
+        report = _run_validators(lattice, ["round_trip"], **validation_options)
+        if not report.is_valid:
             raise ValidationError("Validation failed after export", report=report)
 
     return result
@@ -113,7 +116,9 @@ def _run_validators(
         all_issues.extend(report.issues)
 
     is_valid = all(issue.severity != "error" for issue in all_issues)
-    has_not_implemented = any(issue.category == "not_implemented" for issue in all_issues)
+    has_not_implemented = any(
+        issue.category == "not_implemented" for issue in all_issues
+    )
     if has_not_implemented:
         is_valid = False
 
