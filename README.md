@@ -2,53 +2,63 @@
 
 ![Python](https://img.shields.io/badge/python-3.12-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 
-Translate decision logic between formats. Babel moves [mountainash-rules](https://github.com/mountainash-io/mountainash-rules) lattices in and out of external decision formats — CSV (with a metadata manifest sidecar) and DMN today — with validation that round trips are lossless.
+Translate Mountain Ash Rules lattices between declared transport fidelities.
+CSV and DMN carry inspection-only flat values. The explicit Python-only native
+format carries a complete bounded Rules snapshot without flattening it.
 
-## Quick Start
+## Flat CSV and DMN
 
 ```python
 import mountainash_rules_babel as babel
 
-# Export a lattice (from AccumulatorEngine.build() or built by hand)
-babel.export_lattice(lattice, "csv", path="rules.csv")
-# -> rules.csv + rules.manifest.yaml (dimensions + aggregates)
-
-# Re-import: the sidecar restores metadata and aggregates automatically
-lattice = babel.import_lattice("rules.csv")
-
-# DMN export (hitPolicy comes from the lattice's metadata)
-babel.export_lattice(lattice, "dmn", path="rules.dmn")
-
-# Validate a CSV round trip is lossless
-report = babel.validate(lattice, checks=["round_trip"])
-assert report.is_valid
+babel.export_lattice(flat_lattice, "csv", path="rules.csv")
+# writes rules.csv and rules.manifest.yaml
+restored_flat = babel.import_lattice("rules.csv")
+babel.export_lattice(restored_flat, "dmn", path="rules.dmn")
 ```
 
-Or from the command line:
+New CSV sidecars contain exactly `fidelity: flat_values`, `dimensions`, and
+`aggregates`. Historical untagged two-field sidecars remain readable as flat
+inspection data. CSV sentinel handling applies only to declared dimension
+columns (including range endpoints), never output columns.
+
+CSV and DMN reject `exact_cells` artifacts. Babel does not infer exact-native
+eligibility from flat data, compose a flat table, or perform a lossy
+native-to-flat projection.
+
+## Native Python transport
+
+```python
+from mountainash_rules import ExactLimits
+import mountainash_rules_babel as babel
+
+limits: ExactLimits = configured_complete_limits
+babel.export_lattice(lattice, "native", path="pricing.snapshot", limits=limits)
+restored = babel.import_lattice("pricing.snapshot", format="native", limits=limits)
+```
+
+`native` requires a complete explicit `ExactLimits`, an exact-native lattice,
+and a directory path. It delegates persistence to Rules and preserves the
+complete snapshot. Native byte export, extension inference for directories,
+and legacy-as-native import all fail explicitly. `validate=True` validates the
+actual native directory through Rules load rather than applying CSV checks.
+
+Native CLI support is deferred. The existing command-line commands remain for
+flat CSV/DMN workflows:
 
 ```bash
-babel formats                                  # list exporters/importers/validators
+babel formats
 babel export -f dmn -i rules.csv -o rules.dmn
 babel import -i rules.csv
 babel validate -i rules.csv -c round_trip
 ```
 
-## The schema contract
+## Validation
 
-Lattices out of `AccumulatorEngine.build()` are **composed**: each row is a combination of rules whose authoritative values live in coalesced (`co_*`) and aggregate (`__agg_*`) columns, while the plain columns are stale copies from an anchor rule. Babel's exporters normalise every lattice through a single resolver so files always carry the authoritative values under flat column names — and imports always come back **flat** (recombination belongs to the engine, not the file format). Don't-care values are empty cells in files and typed sentinels in frames.
-
-The full contract — column taxonomy, sentinel encoding, sidecar manifest, DMN fail-closed rules — is documented in [`docs/lattice-schema.md`](docs/lattice-schema.md).
-
-## Formats
-
-| Format | Import | Export | Notes |
-|---|---|---|---|
-| CSV | ✓ | ✓ | manifest sidecar (`<stem>.manifest.yaml`) restores metadata + aggregates |
-| DMN 1.3 | planned | ✓ | hitPolicy from metadata; UNIQUE on composed lattices fails closed unless `assume_unique=True` |
-| GoRules JDM | planned | planned | optional extra: `jdm` |
-| flagd / OpenFeature | planned | planned | optional extra: `flagd` |
-
-Validators: `round_trip` (real for CSV), `conflicts` / `coverage` / `orphans` (fail-closed until implemented — they report invalid rather than silently passing).
+`round_trip` validates flat CSV structurally only for flat lattices. Native
+round trips use bounded Rules save/load and compare public artifact, partition,
+resolved metadata, aggregate, and binding identity. `conflicts`, `coverage`,
+and `orphans` remain fail-closed until implemented.
 
 ## Installation
 
@@ -58,7 +68,8 @@ cd mountainash-rules-babel
 hatch env create
 ```
 
-Requires a sibling checkout of `mountainash-rules` (see `hatch.toml`). After changing that repo, run `hatch env prune` here to pick up the new code.
+Requires a sibling checkout of `mountainash-rules` (see `hatch.toml`). After
+changing that repository, run `hatch env prune` here to pick up the new code.
 
 ## Development
 
@@ -77,4 +88,4 @@ Part of the [Mountain Ash](https://github.com/mountainash-io) data framework eco
 
 ## License
 
-Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE) for details.
+Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE).

@@ -1,67 +1,69 @@
-# Lattice Schema Contract
+# Lattice transport contract
 
-This document records the column taxonomy and export semantics that
-mountainash-rules-babel enforces when moving lattices across format
-boundaries (CSV, DMN). It documents decisions already made in the
-2026-07-12 design specs; it introduces no new behaviour.
+Babel supports two deliberately separate transport fidelities. It does not
+reconstruct exact state from a table and it does not silently flatten an exact
+artifact.
 
-## Flat vs composed
+## Flat values: CSV and DMN
 
-A `Lattice` is **composed** when it came out of `AccumulatorEngine.build()`
-(detected via the `__prime_product` tracking column — `Lattice.is_composed`).
-Anything else — hand-built frames, imported files — is **flat**. Imports are
-**always flat**: recombination is `AccumulatorEngine.build()`'s job, never an
-importer's. A flat lattice that carries tracking columns is a mixed shape and
-is rejected with `SchemaContractError`.
+CSV sidecars declare inspection-only flat values:
 
-## Column taxonomy
+```yaml
+fidelity: flat_values
+dimensions: ...
+aggregates:
+  - column_name: amount
+    operation: sum
+```
 
-| Column class | Pattern | Flat | Composed | Export? |
-|---|---|---|---|---|
-| Dimension values | `dimension_name` / `rule_field` / `range_*_field` | ✓ (authoritative) | present but **stale** (anchor rule's values, carried unchanged) — never read | flat only |
-| Coalesced values | `co_<rule_field>`, `co_<range_*_field>` | ✗ | ✓ (authoritative) | composed only, emitted **under the flat names** |
-| NA flags | `co_<field>_na`, `co_<dim>_na` | ✗ | ✓ | never (encoded as empty/don't-care cells) |
-| Tracking | `__prime`, `__prime_product`, `__level` | ✗ | ✓ | opt-in (`include_tracking=True`) |
-| Aggregates | `__agg_<name>` | ✗ | ✓ | ✓, renamed to `<name>` |
-| Non-dimension passthrough | everything else except `rule_name` | ✓ (outputs, authoritative) | present but **stale** (anchor rule's values, not recomputed) | flat only |
-| Identity | `rule_name` | ✓ | ✓ (anchor rule's) | ✓ flat; composed: replaced by provenance |
+Those are the only fields in a newly emitted sidecar. Babel accepts the
+historical untagged `{dimensions, aggregates}` shape for flat inspection, but
+rejects unknown fields, unknown fidelity, and native discriminators. An
+`AggregateSpec` intentionally contains only its source column and operation;
+a CSV value cannot establish output scalar type, timezone, numeric semantics,
+or exact-native eligibility.
 
-On a composed lattice the only meaningful per-row values are the `co_*`
-columns, the tracking columns, and the `__agg_*` accumulations. Everything
-else — including non-dimension "output" columns and `rule_name` — is a stale
-copy from the anchor (seed) rule and must not be exported as if it described
-the combination. `resolve_lattice()` in `exporters/base.py` is the single
-normaliser that enforces this: every exporter reads its `LatticeView`, never
-the raw frame.
+CSV and DMN accept only a `Lattice` whose public `artifact_kind` is absent
+(flat inspection data). An `exact_cells` artifact fails at the adapter boundary
+even when its predicates happen to look scalar. There is no `assume_unique`
+bypass, composition marker, prime/rank export, or native-to-flat projection.
 
-## Don't-care encoding
+At the CSV boundary, sentinel conversion is metadata-directed: only declared
+dimension value columns are blanked, including both range endpoints. Output
+columns are never scanned for sentinels, so an integer output value of
+`-999999999` remains that value. Boolean null dimensions remain null; nested
+set columns are not a CSV interchange shape and retain Polars' explicit
+unsupported nested-CSV failure.
 
-Inside frames, don't-care is encoded **in-band** with typed sentinels
-(`<NA>` / `<NOT_SET>` for strings, `-999999999` / `-999999998` for numerics,
-and the temporal `UNKNOWN_DATE`/`NOT_SET_DATE` family — see
-`mountainash_rules.sentinels_for`). At the CSV boundary sentinels
-become **empty cells** on export, and empty cells in dimension columns are
-filled back to the type's UNKNOWN sentinel on import, so a CSV round trip is
-lossless (`RoundTripValidator` verifies exactly this).
+## Native snapshots: Python API
 
-## Sidecar manifest
+The explicit `native` format transports a complete Rules snapshot directory.
+It delegates atomically to `Lattice.save` and `Lattice.load`; Babel neither
+rewrites amount tables nor creates a wrapper manifest, archive, bindings,
+sources, scopes, predicates, or geometry.
 
-`CsvExporter` writes `<stem>.manifest.yaml` next to every CSV: a
-`LatticeManifest` holding the `DimensionsMetadata` and aggregate specs.
-`CsvImporter` autoloads the sidecar when no explicit metadata is passed and
-rehydrates aggregates from it.
+```python
+from mountainash_rules import ExactLimits
+import mountainash_rules_babel as babel
 
-## DMN
+# The caller must supply a complete, explicit ExactLimits instance.
+limits: ExactLimits = configured_limits
+babel.export_lattice(lattice, "native", path="pricing.snapshot", limits=limits)
+restored = babel.import_lattice("pricing.snapshot", format="native", limits=limits)
+```
 
-`DmnExporter` reads the resolved view, takes `hitPolicy` from
-`metadata.hit_policy` (`rule_order` → `RULE ORDER`), and fails closed with
-`SchemaContractError` when asked to emit `UNIQUE` for a composed lattice —
-distinct maximal combinations can overlap, so uniqueness is unproven unless
-the caller passes `assume_unique=True` after a conflicts analysis.
+Native export requires `lattice.artifact_kind == "exact_cells"`. Native import
+uses Rules' bounded loader and rejects a legacy inspection snapshot. Native
+byte export is unsupported because no archive format is defined. Omitted
+import format continues to infer only ordinary file extensions; a directory is
+never inferred as native.
 
-## References
+`round_trip` validation is fidelity-aware. Flat CSV validation performs its
+structural table comparison only on flat values. Native validation uses Rules
+save/load under the caller's limits and compares public artifact, partition,
+resolved metadata, aggregate, and binding identity. `export_lattice(...,
+validate=True)` forwards its real format and limits; for native output it
+validates the directory just written.
 
-- Spec: `docs/superpowers/specs/2026-07-12-lattice-schema-contract-design.md`
-- Upstream specs: `mountainash-rules/docs/superpowers/specs/` (accumulator
-  correctness, serializable dimension metadata)
-- Principles: `mountainash-central/01.principles/mountainash-rules/`
+Native CLI support is deferred. The existing command-line CSV/DMN flows remain
+flat-only; native transport is available through the Python API above.

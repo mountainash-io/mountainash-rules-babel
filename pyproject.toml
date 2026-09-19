@@ -42,9 +42,11 @@ babel = "mountainash_rules_babel.cli.main:app"
 [project.entry-points."mountainash_babel.exporters"]
 csv = "mountainash_rules_babel.exporters.csv_:CsvExporter"
 dmn = "mountainash_rules_babel.exporters.dmn:DmnExporter"
+native = "mountainash_rules_babel.exporters.native:NativeExporter"
 
 [project.entry-points."mountainash_babel.importers"]
 csv = "mountainash_rules_babel.importers.csv_:CsvImporter"
+native = "mountainash_rules_babel.importers.native:NativeImporter"
 
 [project.entry-points."mountainash_babel.validators"]
 round_trip = "mountainash_rules_babel.validators.round_trip:RoundTripValidator"

@@ -1,6 +1,8 @@
 import polars as pl
+import pytest
 from mountainash_rules import Dimension, DimensionsMetadata, Lattice, MatchStrategy
 
+from mountainash_rules_babel.errors import SchemaContractError
 from mountainash_rules_babel.validators.round_trip import RoundTripValidator
 from mountainash_rules_babel.validators.conflicts import ConflictsValidator
 from mountainash_rules_babel.validators.coverage import CoverageValidator
@@ -33,6 +35,27 @@ def test_round_trip_other_formats_fail_closed():
     report = v.validate(_make_lattice(), format="dmn")
     assert report.is_valid is False
     assert report.warnings[0].category == "not_implemented"
+
+
+def test_round_trip_rejects_exact_lattice_for_flat_csv():
+    from tests.exact_fixture import build_exact_lattice
+
+    _, lattice, _, explicit_limits = build_exact_lattice()
+
+    with pytest.raises(SchemaContractError, match="flat values"):
+        RoundTripValidator().validate(lattice, format="csv", limits=explicit_limits)
+
+def test_round_trip_native_uses_rules_snapshot(tmp_path):
+    from tests.exact_fixture import build_exact_lattice
+
+    _, lattice, _, explicit_limits = build_exact_lattice()
+
+    report = RoundTripValidator().validate(
+        lattice, format="native", limits=explicit_limits, workdir=tmp_path
+    )
+
+    assert report.is_valid
+    assert report.exact_match is True
 
 
 def test_conflicts_stub_is_fail_closed():

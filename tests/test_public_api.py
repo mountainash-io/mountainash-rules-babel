@@ -1,7 +1,9 @@
 import tempfile
 from pathlib import Path
 
+import pytest
 from mountainash_rules_babel import export_lattice, import_lattice, validate
+from mountainash_rules_babel.errors import ValidationError
 from mountainash_rules_babel.validators.base import ValidationReport
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -57,6 +59,36 @@ def test_export_lattice_dmn_to_bytes():
     result = export_lattice(lattice, "dmn")
     assert isinstance(result, bytes)
     assert b"decisionTable" in result
+
+
+def test_export_validate_rejects_unimplemented_dmn_round_trip(tmp_path):
+    lattice = import_lattice(
+        FIXTURES / "pricing_3row.csv",
+        format="csv",
+        dimension_columns=["country", "product"],
+    )
+
+    with pytest.raises(ValidationError) as failure:
+        export_lattice(lattice, "dmn", path=tmp_path / "rules.dmn", validate=True)
+
+    assert failure.value.report is not None
+    assert not failure.value.report.is_valid
+
+
+def test_export_native_forwards_format_and_limits_to_round_trip_validation(tmp_path):
+    from tests.exact_fixture import build_exact_lattice
+
+    _, lattice, _, explicit_limits = build_exact_lattice()
+
+    snapshot = export_lattice(
+        lattice,
+        "native",
+        path=tmp_path / "snapshot",
+        limits=explicit_limits,
+        validate=True,
+    )
+
+    assert snapshot.is_dir()
 
 
 def test_validate_returns_fail_closed_report():
